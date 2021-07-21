@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Music Discovery Tracker</title>
+	<link rel="stylesheet" href="/main.css">
+</head>
+<body>
+	<h1>Music Discovery Tracker</h1>
+	<form action="/albums" method="POST">
+		<input type="text" placeholder="Name of Artist/Band" name="name">
+		<input type="text" placeholder="Name of Album" name="album">
+		<button type="submit">Submit</button>
+	</form>
+	<ul>
+		<% for(var i = 0; i < albums.length; i++) {%>
+		<li class="album">
+			<div class="read-album">
+				<span class="album-artist"><%= albums[i].name %>:</span>
+				<span class="album-name"><%= albums[i].album %></span>
+			</div>
+			<div class="edit-album hide">
+				<form action="/albums" method="POST">
+					<input type="text" name="album-artist" value="<%= albums[i].name %>">
+					<input type="text" name="album-name" value="<%= albums[i].album %>">
+					<button class="save-button" type="submit">Save</button>
+				</form>
+				<button class="cancel-button">Cancel</button>
+			</div>
+			<button class="update-button">Update</button>
+			<button class="delete-button">Delete</button>
+		</li>
+		<% } %>
+	</ul>
+    <script src="/main.js"></script>
+</body>
+</html>
