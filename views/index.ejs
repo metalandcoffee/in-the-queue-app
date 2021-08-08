@@ -5,45 +5,55 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Music Discovery Tracker</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Otomanopee+One&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="normalize.css">
-	<link rel="stylesheet" href="skeleton.css">
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-	<h1>Music Discovery Tracker</h1>
-	<h2 class="tagline">Track the music you are listening to. Add an album to your queue and then remove it when you are done listening to it!</h2>
-	<h3>Add An Album</h3>
-	<form action="/add-album" method="POST">
-		<input type="text" placeholder="Name of Artist/Band" name="name">
-		<input type="text" placeholder="Name of Album" name="album">
-		<button type="submit">Submit</button>
-	</form>
-	<hr>
-	<h3>Current Album List</h3>
-	<ul>
-		<% for(var i = 0; i < albums.length; i++) {%>
-		<li class="album">
-			<div class="read-album">
-				<span class="album-artist"><%= albums[i].name %>:</span>
-				<span class="album-name"><%= albums[i].album %></span>
-			</div>
-			<div class="edit-album hide">
-				<form action="/update-album" method="POST">
-					<input type="text" name="album-artist" value="<%= albums[i].name %>">
-					<input type="text" name="album-name" value="<%= albums[i].album %>">
-					<input type="hidden" name="album-id" value="<%= albums[i]._id %>">
-					<button class="save-button" type="submit">Save</button>
+	<main class="bg-color-pink">
+		<div class="container pull-to-front">
+			<h1>Music Discovery Tracker</h1>
+			<h2 class="tagline">Track the music you are listening to. Add an album to your queue and then remove it when you are done listening to it!</h2>
+		</div>
+		<div class="bg-color-transparent padding-1">
+			<div class="container pull-to-front">
+				<h3>Add An Album</h3>
+				<form class="grid-row" action="/add-album" method="POST">
+					<input type="text" placeholder="Name of Artist/Band" name="name">
+					<input type="text" placeholder="Name of Album" name="album">
+					<button type="submit">
+						<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus-square" class="svg-inline--fa fa-plus-square fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M352 240v32c0 6.6-5.4 12-12 12h-88v88c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-88h-88c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h88v-88c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v88h88c6.6 0 12 5.4 12 12zm96-160v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg>
+					</button>
 				</form>
-				<button class="cancel-button">Cancel</button>
+				<h3>Current Album List</h3>
+				<ul>
+					<% for(var i = 0; i < albums.length; i++) {%>
+					<li class="album grid-row">
+						<div class="read-album">
+							<span class="album-artist"><%= albums[i].name %>:</span>
+							<span class="album-name"><%= albums[i].album %></span>
+						</div>
+						<div class="edit-album hide">
+							<form action="/update-album" method="POST">
+								<input type="text" name="album-artist" value="<%= albums[i].name %>">
+								<input type="text" name="album-name" value="<%= albums[i].album %>">
+								<input type="hidden" name="album-id" value="<%= albums[i]._id %>">
+								<button class="save-button" type="submit">Save</button>
+							</form>
+							<button class="cancel-button">Cancel</button>
+						</div>
+						<button class="update-button">
+							<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen" class="svg-inline--fa fa-pen fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M290.74 93.24l128.02 128.02-277.99 277.99-114.14 12.6C11.35 513.54-1.56 500.62.14 485.34l12.7-114.22 277.9-277.88zm207.2-19.06l-60.11-60.11c-18.75-18.75-49.16-18.75-67.91 0l-56.55 56.55 128.02 128.02 56.55-56.55c18.75-18.76 18.75-49.16 0-67.91z"></path></svg>
+						</button>
+						<button class="delete-button" data-id="<%= albums[i]._id %>">
+							<svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash-alt" class="svg-inline--fa fa-trash-alt fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path></svg>
+						</button>
+					</li>
+					<% } %>
+				</ul>
 			</div>
-			<button class="update-button">Update</button>
-			<button class="delete-button" data-id="<%= albums[i]._id %>">Delete</button>
-		</li>
-		<% } %>
-	</ul>
+		</div>
+
+		<div class="transparent-overlay"></div>
+	</main>
     <script src="/main.js"></script>
 </body>
 </html>

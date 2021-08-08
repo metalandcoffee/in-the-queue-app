@@ -32,7 +32,7 @@ Array.from(updateAlbums).map((btn) => {
 
 Array.from(deleteAlbums).map((album) => {
     album.addEventListener('click', (e) => {
-        console.log(e.target.dataset.id);
+        console.log(e.target);
         fetch('/albums', {
             method: 'delete',
             headers: { 'Content-Type': 'application/json' },
