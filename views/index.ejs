@@ -16,7 +16,7 @@
 		<div class="bg-color-transparent padding-1">
 			<div class="container pull-to-front">
 				<h3>Add An Album</h3>
-				<form class="grid-row" action="/add-album" method="POST">
+				<form class="grid-row add-album" action="/add-album" method="POST">
 					<input type="text" placeholder="Name of Artist/Band" name="name">
 					<input type="text" placeholder="Name of Album" name="album">
 					<button type="submit">
@@ -25,10 +25,16 @@
 				</form>
 				<h3>Current Album List</h3>
 				<ul>
+					<li class="album album-heading grid-row">
+						<div class="read-album">
+							<span class="album-artist">Artist/Band</span>
+							<span class="album-name">Album Name</span>
+						</div>
+					</li>
 					<% for(var i = 0; i < albums.length; i++) {%>
 					<li class="album grid-row">
 						<div class="read-album">
-							<span class="album-artist"><%= albums[i].name %>:</span>
+							<span class="album-artist"><%= albums[i].name %></span>
 							<span class="album-name"><%= albums[i].album %></span>
 						</div>
 						<div class="edit-album hide">
