@@ -7,6 +7,8 @@
     --white: #fff;
     --black: #000;
     --pink: #a86b76;
+    --green: #8fca91;
+    --red: #d97171;
 }
 
 html {
@@ -78,6 +80,26 @@ button:hover {
     color: var(--white);
 }
 
+.cancel-button {
+    align-items: center;
+}
+
+.liked-button:hover {
+    color: var(--green);
+}
+
+.liked-button.is-liked {
+    color: var(--green);
+}
+
+.disliked-button:hover {
+    color: var(--red);
+}
+
+.disliked-button.is-disliked {
+    color: var(--red);
+}
+
 .album-heading {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid currentColor;
@@ -90,8 +112,7 @@ button:hover {
     max-width: 32rem;
 }
 
-.edit-album,
-.edit-album form {
+.edit-album {
     display: flex;
     justify-content: space-between;
 }
@@ -105,12 +126,23 @@ button:hover {
     margin: 0 auto;
 }
 
-.grid-row {
+.grid-row,
+.edit-album form {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr 1fr auto;
     justify-content: start;
     grid-gap: .5rem;
     align-items: center;
+}
+
+.edit-album form {
+    flex: 1;
+}
+
+.album.grid-row {
+    grid-template-columns: 1fr repeat(4, auto);
+    margin-bottom: .2rem;
+    height: 1.5rem;
 }
 
 .hide {
