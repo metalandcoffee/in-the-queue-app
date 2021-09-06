@@ -35,8 +35,8 @@ MongoClient.connect(process.env.DB_CONNECT)
     const usersCollection = db.collection('users');
 
     app.use(express.static('public'));
-    app.listen(3001, function() {
-        console.log('listening on 3001');
+    app.listen(process.env.PORT, function() {
+        console.log(`listening on ${process.env.PORT}`);
     });
 
     initPassPort(passport,

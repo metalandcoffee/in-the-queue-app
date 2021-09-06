@@ -5,12 +5,35 @@ const cancelBtns     = document.querySelectorAll('.cancel-button');
 const saveBtns       = document.querySelectorAll('.save-button');
 const thumbsUpBtns   = document.querySelectorAll('.liked-button');
 const thumbsDownBtns = document.querySelectorAll('.disliked-button');
+const headings = document.querySelectorAll('.list-heading');
+
+Array.from(headings).map((heading) => {
+    heading.addEventListener('click', (e) => {
+        if ( e.target.tagName !== 'BUTTON' ) {
+            return;
+        }
+        e.target.classList.add('hide');
+        if (e.target.classList.contains('show-button')) {
+            e.target.parentElement.querySelector('.hide-button').classList.remove('hide');
+            e.target.parentElement.parentElement.querySelector('ul').classList.add('hide');
+        } else {
+            e.target.parentElement.querySelector('.show-button').classList.remove('hide');
+            e.target.parentElement.parentElement.querySelector('ul').classList.remove('hide');
+        }
+
+    });
+});
+
 
 const toggleAlbumEdit = (btn) => {
     const editAlbum = btn.parentElement.querySelector('.edit-album');
     const readAlbum = btn.parentElement.querySelector('.read-album');
+    const liked = btn.parentElement.querySelector('.liked-button');
+    const disliked = btn.parentElement.querySelector('.disliked-button');
     editAlbum.classList.toggle('hide');
     readAlbum.classList.toggle('hide');
+    liked.classList.toggle('hide');
+    disliked.classList.toggle('hide');
 };
 
 Array.from(cancelBtns).map((btn) => {

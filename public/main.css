@@ -141,8 +141,11 @@ button:hover {
 
 .album.grid-row {
     grid-template-columns: 1fr repeat(4, auto);
-    margin-bottom: .2rem;
-    height: 1.5rem;
+    padding: .2rem;
+    height: 2rem;
+}
+.album.grid-row:hover:not(:first-child) {
+    background-color: rgba(69,69,69,0.5);
 }
 
 .hide {
