@@ -1,11 +1,13 @@
 // main.js
-const updateAlbums   = document.querySelectorAll('.update-button');
-const deleteAlbums   = document.querySelectorAll('.delete-button');
-const cancelBtns     = document.querySelectorAll('.cancel-button');
-const saveBtns       = document.querySelectorAll('.save-button');
-const thumbsUpBtns   = document.querySelectorAll('.liked-button');
-const thumbsDownBtns = document.querySelectorAll('.disliked-button');
-const headings = document.querySelectorAll('.list-heading');
+const updateAlbums     = document.querySelectorAll('.update-button');
+const deleteAlbums     = document.querySelectorAll('.delete-button');
+const cancelBtns       = document.querySelectorAll('.cancel-button');
+const saveBtns         = document.querySelectorAll('.save-button');
+const thumbsUpBtns     = document.querySelectorAll('.liked-button');
+const thumbsDownBtns   = document.querySelectorAll('.disliked-button');
+const headings         = document.querySelectorAll('.list-heading');
+const archive          = document.getElementById('archive-button');
+const archiveContainer = document.querySelector('#archive ul');
 
 Array.from(headings).map((heading) => {
     heading.addEventListener('click', (e) => {
@@ -23,7 +25,6 @@ Array.from(headings).map((heading) => {
 
     });
 });
-
 
 const toggleAlbumEdit = (btn) => {
     const editAlbum = btn.parentElement.querySelector('.edit-album');
@@ -119,5 +120,44 @@ Array.from(thumbsDownBtns).map((btn) => {
             console.log(data);
             window.location.reload();
         });
+    });
+});
+
+if ( null !== archive ) {
+    archive.addEventListener('click', function(e) {
+        console.log('you clicked the archive button');
+        result = window.confirm(`Are you sure you want to archive this list? You will not be able to make anymore changes to it.`);
+        if ( ! result ) {
+            return;
+        }
+        fetch('/archive', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: ''
+        })
+        .then(res => {
+            if (res.ok) return res.json();
+        })
+        .then(data => {
+            console.log(data);
+            window.location.reload();
+        });
+    });
+}
+
+
+archiveContainer.addEventListener( 'click', function(e) {
+    if ( e.target.tagName !== 'BUTTON' ) {
+        return;
+    }  
+
+    console.log('hiiii');
+
+    fetch('/get-archive', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            'date': e.target.dataset.id,
+        })
     });
 });

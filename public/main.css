@@ -9,6 +9,8 @@
     --pink: #a86b76;
     --green: #8fca91;
     --red: #d97171;
+    --purple: #9090c7;
+    --lt-purple: #aeaef8;
 }
 
 html {
@@ -49,10 +51,19 @@ h4 {
     font-size: 1.5rem;
 }
 
+a,a:visited {
+    color: var(--purple);
+}
+
+a:hover {
+    color: var(--lt-purple);
+}
+
 ul {
     list-style: none;
     padding: 0;
 }
+
 input {
     border: 0;
     border-radius: 1rem;
@@ -74,10 +85,25 @@ button {
     padding: 0;
     cursor: pointer;
     transition: all 0.3s;
+    font-family: "Circular";
 }
 
 button:hover {
     color: var(--white);
+}
+
+footer {
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+}
+
+footer button,
+footer a,
+footer a:visited {
+    color: var(--white);
+    font-size: 1rem;
+    text-decoration: none;
 }
 
 .cancel-button {
@@ -155,6 +181,11 @@ button:hover {
 .bg-color-pink {
     position: relative;
     background-color: var(--pink);
+}
+
+.bg-color-purple {
+    position: relative;
+    background-color: var(--purple);
 }
 
 .bg-color-transparent {

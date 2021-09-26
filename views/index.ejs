@@ -73,7 +73,11 @@
 					</ul>
 				</div>
 				<div id="liked">
-					<h3>Liked</h3>
+					<div class="list-heading">
+						<h3>Liked</h3>
+						<button class="show-button"><%- include('icons/eye-solid.svg'); %></button>
+						<button class="hide-button hide"><%- include('icons/eye-slash-solid.svg'); %></button>
+					</div>
 					<ul>
 						<li class="album album-heading grid-row">
 							<div class="read-album">
@@ -81,7 +85,7 @@
 								<span class="album-name">Album Name</span>
 							</div>
 						</li>
-						<% for(var i = 0; i < liked.length; i++) {%>
+						<%for(var i = 0; i < liked.length; i++) {%>
 						<li class="album grid-row">
 							<div class="read-album">
 								<span class="album-artist"><%= liked[i].name %></span>
@@ -117,7 +121,11 @@
 					</ul>
 				</div>
 				<div id="disliked">
-					<h3>Disliked</h3>
+					<div class="list-heading">
+						<h3>Disliked</h3>
+						<button class="show-button"><%- include('icons/eye-solid.svg'); %></button>
+						<button class="hide-button hide"><%- include('icons/eye-slash-solid.svg'); %></button>
+					</div>
 					<ul>
 						<li class="album album-heading grid-row">
 							<div class="read-album">
@@ -160,13 +168,34 @@
 						<% } %>
 					</ul>
 				</div>
+				<div id="archive">
+					<div class="list-heading">
+						<h3>Archived</h3>
+						<button class="show-button"><%- include('icons/eye-solid.svg'); %></button>
+						<button class="hide-button hide"><%- include('icons/eye-slash-solid.svg'); %></button>
+					</div>
+					<ul>
+					<%
+					for (var i = 0; i < archiveDates.length; i++) {
+						for (var prop in archiveDates[i]) {
+						%>
+						<li><a href="archive?date=<%= prop %>" data-id="<%= prop %>"><%= archiveDates[i][prop] %></a></li>
+						<%
+						}
+					}
+					%>
+					</ul>
+				</div>
 			</div>
-			<form class="pull-to-front" action="logout" method="POST">
-				<button type="submit">Logout</button>
-			</form>
 		</div>
 		<div class="transparent-overlay"></div>
 	</main>
+	<footer>
+		<button id="archive-button" class="pull-to-front">Archive & Clear</button>
+		<form class="pull-to-front" action="logout" method="POST">
+			<button type="submit">Logout</button>
+		</form>
+	</footer>
     <script src="/main.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 // Pull in environmental constants.
 require('dotenv').config();
+const dateFns = require('date-fns');
 
 // External dependencies.
 const express = require('express');
@@ -11,6 +12,7 @@ const initPassPort = require('./passport-config');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
 const { use } = require('passport');
+const { ar } = require('date-fns/locale');
 const app = express();
 
 // Tell Express that we are using the EJS template engine.
@@ -51,10 +53,6 @@ MongoClient.connect(process.env.DB_CONNECT)
     async function getUserById(id) {
       return await usersCollection.findOne({ _id: ObjectId(id) });
     }
-    
-    // function getUserById() {
-    //   usersCollection
-    // }
 
     // Login Endpoint.
     app.get('/login', checkNotAuthenticated, function(req, res) {
@@ -98,20 +96,46 @@ MongoClient.connect(process.env.DB_CONNECT)
     });
 
     // Home Endpoint.
-    app.get('/', checkAuthenticated, async function(req, res) {
-      const current = await albumsCollection.find({ status : 'none' }).toArray();
-      const liked = await albumsCollection.find({ status : 'liked' }).toArray();
-      const disliked = await albumsCollection.find({ status : 'disliked' }).toArray();
+    //app.get('/', checkAuthenticated, async function(req, res) {
+    app.get('/', async function(req, res) {
+      const current = await albumsCollection.find(
+        {
+          status: 'none',
+          is_archive: { "$exists": false }
+        }
+      )
+      .toArray();
+      const liked = await albumsCollection.find(
+        {
+          status: 'liked',
+          is_archive: { "$exists": false }
+        },
+      )
+      .toArray();
+      const disliked = await albumsCollection.find(
+        {
+          status: 'disliked',
+          is_archive: { "$exists": false }
+        }
+      )
+      .toArray();
 
-      console.log(current, liked, disliked);
-      res.render('index.ejs', { albums: current, liked, disliked });
-      // albumsCollection.find().toArray()
-      //   .then(results => {
-      //     res.render('index.ejs', { albums: results })
-      //   })
-      //   .catch(error => {
-      //     console.error(error);
-      //   });
+      const archive = await albumsCollection.find(
+        {
+          archive_date: { "$exists": true }
+        },
+        {
+          projection: { _id: 0, archive_date: 1 }
+        }
+      )
+      .toArray();
+      const archiveDates = [];
+      archive.map(album => {
+        const obj = {};
+        obj[album.archive_date] = dateFns.format(album.archive_date, 'MMMM do, y');
+        archiveDates.push(obj);
+      });
+      res.render('index.ejs', { albums: current, liked, disliked, archiveDates });
     })
 
     // Album Add Endpoint.
@@ -131,7 +155,6 @@ MongoClient.connect(process.env.DB_CONNECT)
 
     // Album Update Endpoint.
     app.post('/update-album', (req, res) => {
-      console.log(req.body);
       albumsCollection.updateOne(
         { _id: ObjectId(req.body['album-id']) },
         { $set: { 
@@ -147,7 +170,6 @@ MongoClient.connect(process.env.DB_CONNECT)
 
     // Album Delete Endpoint.
     app.delete('/albums', (req, res) => {
-      console.log(req.body['album-id']);
       albumsCollection.deleteOne(
         { _id: ObjectId(req.body['album-id']) }
       )
@@ -162,20 +184,76 @@ MongoClient.connect(process.env.DB_CONNECT)
 
     // Album Post Endpoint.
     app.post('/albums', (req, res) => {
-      console.log(req.body['album-id']);
       albumsCollection.updateOne(
         { _id: ObjectId(req.body['album-id']) },
         { $set: { status: req.body['status'] } }
       )
       .then(result => {
-        console.log(result);
-        // if (result.deletedCount === 0) {
-        //   return res.json('No albums to like...');
-        // }
         res.json(`Album status has been updated.`);
       })
       .catch(error => console.error(error));
     })
+
+     // Archive Endpoint.
+    app.get('/archive', async (req, res) => {
+      try {
+        const current = await albumsCollection.find(
+          {
+            status: 'none',
+            archive_date: Number(req.query.date)
+          }
+        )
+        .toArray();
+        const liked = await albumsCollection.find(
+          {
+            status: 'liked',
+            archive_date: Number(req.query.date)
+          },
+        )
+        .toArray();
+        const disliked = await albumsCollection.find(
+          {
+            status: 'disliked',
+            archive_date: Number(req.query.date)
+          }
+        )
+        .toArray();
+        const archive = await albumsCollection.find(
+          {
+            archive_date: { "$exists": true }
+          },
+          {
+            projection: { _id: 0, archive_date: 1 }
+          }
+        )
+        .toArray();
+        const archiveDates = [];
+        archive.map(album => {
+          const obj = {};
+          obj[album.archive_date] = dateFns.format(album.archive_date, 'MMMM do, y');
+          archiveDates.push(obj);
+        });
+        res.render('archive.ejs', { archiveDate: dateFns.format(Number(req.query.date), 'MMMM do, y'),albums: current, liked, disliked, archiveDates });
+      } catch(e) {
+        console.log(e);
+      }
+    });
+  
+    app.post('/archive', async (req, res) => {
+      try {
+        const date = Date.now();
+        const updates = await albumsCollection.updateMany(
+          { is_archive: { "$exists": false } },
+          { $set: { 
+            "is_archive" : true,
+            "archive_date": date
+          } }
+        );
+        res.json(`Albums have been archived.`);
+      } catch(e) {
+        console.log(e);
+      }
+    });
   })
   .catch(error => console.error(error));
 
