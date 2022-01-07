@@ -1,201 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Music Discovery Tracker</title>
-	<link rel="stylesheet" href="main.css">
-</head>
-<body>
-	<main class="bg-color-pink">
-		<div class="container pull-to-front">
-			<h1>Music Discovery Tracker</h1>
-			<h2 class="tagline">Track the new music you are listen to and judge it accordingly!</h2>
-		</div>
-		<div class="bg-color-transparent padding-1">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Music Discovery Tracker</title>
+		<link rel="stylesheet" href="main.css" />
+	</head>
+	<body>
+		<main class="bg-color-pink">
 			<div class="container pull-to-front">
-				<h3>Add An Album</h3>
-				<form class="grid-row add-album" action="/add-album" method="POST">
-					<input type="text" placeholder="Name of Artist/Band" name="name">
-					<input type="text" placeholder="Name of Album" name="album">
-					<button type="submit">
-						<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus-square" class="svg-inline--fa fa-plus-square fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M352 240v32c0 6.6-5.4 12-12 12h-88v88c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-88h-88c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h88v-88c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v88h88c6.6 0 12 5.4 12 12zm96-160v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"></path></svg>
-					</button>
-				</form>
-				<div id="current">
-					<div class="list-heading">
-						<h3>Current Album List</h3>
-						<button class="show-button"><%- include('icons/eye-solid.svg'); %></button>
-						<button class="hide-button hide"><%- include('icons/eye-slash-solid.svg'); %></button>
-					</div>
-					
-					<ul>
-						<li class="album album-heading grid-row">
-							<div class="read-album">
-								<span class="album-artist">Artist/Band</span>
-								<span class="album-name">Album Name</span>
-							</div>
-						</li>
-						<% for(var i = 0; i < albums.length; i++) {%>
-						<li class="album grid-row">
-							<div class="read-album">
-								<span class="album-artist"><%= albums[i].name %></span>
-								<span class="album-name"><%= albums[i].album %></span>
-							</div>
-							<div class="edit-album hide">
-								<form action="/update-album" method="POST">
-									<input type="text" name="album-artist" value="<%= albums[i].name %>">
-									<input type="text" name="album-name" value="<%= albums[i].album %>">
-									<input type="hidden" name="album-id" value="<%= albums[i]._id %>">
-									<button class="save-button" type="submit">
-										<%- include('icons/save.svg'); %>
+				<h1>Music Discovery Tracker</h1>
+				<h2 class="tagline">
+					Track the new music you are listen to and judge it
+					accordingly!
+				</h2>
+			</div>
+			<div class="bg-color-transparent padding-1">
+				<div class="container pull-to-front">
+					<h3>Add An Album</h3>
+					<form
+						class="grid-row add-album"
+						action="/add-album"
+						method="POST"
+					>
+						<input
+							type="text"
+							placeholder="Name of Artist/Band"
+							name="name"
+						/>
+						<input
+							type="text"
+							placeholder="Name of Album"
+							name="album"
+						/>
+						<button type="submit">
+							<svg
+								aria-hidden="true"
+								focusable="false"
+								data-prefix="far"
+								data-icon="plus-square"
+								class="svg-inline--fa fa-plus-square fa-w-14"
+								role="img"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 448 512"
+							>
+								<path
+									fill="currentColor"
+									d="M352 240v32c0 6.6-5.4 12-12 12h-88v88c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-88h-88c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h88v-88c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v88h88c6.6 0 12 5.4 12 12zm96-160v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"
+								></path>
+							</svg>
+						</button>
+					</form>
+					<div id="current">
+						<div class="list-heading">
+							<h3>Current Album List</h3>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hide">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+
+						<ul>
+							<li class="album album-heading grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										>Artist/Band</span
+									>
+									<span class="album-name">Album Name</span>
+								</div>
+							</li>
+							<% for(var i = 0; i < albums.length; i++) {%>
+							<li class="album grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										><%= albums[i].name %></span
+									>
+									<span class="album-name"
+										><%= albums[i].album %></span
+									>
+								</div>
+								<div class="edit-album hide">
+									<form action="/update-album" method="POST">
+										<input
+											type="text"
+											name="album-artist"
+											value="<%= albums[i].name %>"
+										/>
+										<input
+											type="text"
+											name="album-name"
+											value="<%= albums[i].album %>"
+										/>
+										<input
+											type="hidden"
+											name="album-id"
+											value="<%= albums[i]._id %>"
+										/>
+										<button
+											class="save-button"
+											type="submit"
+										>
+											<%- include('icons/save.svg'); %>
+										</button>
+									</form>
+									<button class="cancel-button">
+										<%- include('icons/cancel.svg'); %>
 									</button>
-								</form>
-								<button class="cancel-button">
-									<%- include('icons/cancel.svg'); %>
+								</div>
+								<button
+									class="liked-button"
+									data-id="<%= albums[i]._id %>"
+								>
+									<%- include('icons/liked.svg'); %>
 								</button>
-							</div>
-							<button class="liked-button" data-id="<%= albums[i]._id %>">
-								<%- include('icons/liked.svg'); %>
-							</button>
-							<button class="disliked-button" data-id="<%= albums[i]._id %>">
-								<%- include('icons/disliked.svg'); %>
-							</button>
-							<button class="update-button">
-								<%- include('icons/update.svg'); %>
-							</button>
-							<button class="delete-button" data-id="<%= albums[i]._id %>" data-album="<%= albums[i].name %> - <%= albums[i].album %>">
-								<%- include('icons/delete.svg'); %>
-							</button>
-						</li>
-						<% } %>
-					</ul>
-				</div>
-				<div id="liked">
-					<div class="list-heading">
-						<h3>Liked</h3>
-						<button class="show-button"><%- include('icons/eye-solid.svg'); %></button>
-						<button class="hide-button hide"><%- include('icons/eye-slash-solid.svg'); %></button>
+								<button
+									class="disliked-button"
+									data-id="<%= albums[i]._id %>"
+								>
+									<%- include('icons/disliked.svg'); %>
+								</button>
+								<button class="update-button">
+									<%- include('icons/update.svg'); %>
+								</button>
+								<button
+									class="delete-button"
+									data-id="<%= albums[i]._id %>"
+									data-album="<%= albums[i].name %> - <%= albums[i].album %>"
+								>
+									<%- include('icons/delete.svg'); %>
+								</button>
+							</li>
+							<% } %>
+						</ul>
 					</div>
-					<ul>
-						<li class="album album-heading grid-row">
-							<div class="read-album">
-								<span class="album-artist">Artist/Band</span>
-								<span class="album-name">Album Name</span>
-							</div>
-						</li>
-						<%for(var i = 0; i < liked.length; i++) {%>
-						<li class="album grid-row">
-							<div class="read-album">
-								<span class="album-artist"><%= liked[i].name %></span>
-								<span class="album-name"><%= liked[i].album %></span>
-							</div>
-							<div class="edit-album hide">
-								<form action="/update-album" method="POST">
-									<input type="text" name="album-artist" value="<%= liked[i].name %>">
-									<input type="text" name="album-name" value="<%= liked[i].album %>">
-									<input type="hidden" name="album-id" value="<%= liked[i]._id %>">
-									<button class="save-button" type="submit">
-										<%- include('icons/save.svg'); %>
+					<div id="liked">
+						<div class="list-heading">
+							<h3>Liked</h3>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hide">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+						<ul>
+							<li class="album album-heading grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										>Artist/Band</span
+									>
+									<span class="album-name">Album Name</span>
+								</div>
+							</li>
+							<%for(var i = 0; i < liked.length; i++) {%>
+							<li class="album grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										><%= liked[i].name %></span
+									>
+									<span class="album-name"
+										><%= liked[i].album %></span
+									>
+								</div>
+								<div class="edit-album hide">
+									<form action="/update-album" method="POST">
+										<input
+											type="text"
+											name="album-artist"
+											value="<%= liked[i].name %>"
+										/>
+										<input
+											type="text"
+											name="album-name"
+											value="<%= liked[i].album %>"
+										/>
+										<input
+											type="hidden"
+											name="album-id"
+											value="<%= liked[i]._id %>"
+										/>
+										<button
+											class="save-button"
+											type="submit"
+										>
+											<%- include('icons/save.svg'); %>
+										</button>
+									</form>
+									<button class="cancel-button">
+										<%- include('icons/cancel.svg'); %>
 									</button>
-								</form>
-								<button class="cancel-button">
-									<%- include('icons/cancel.svg'); %>
+								</div>
+								<button
+									class="liked-button is-liked"
+									data-id="<%= liked[i]._id %>"
+								>
+									<%- include('icons/liked.svg'); %>
 								</button>
-							</div>
-							<button class="liked-button is-liked" data-id="<%= liked[i]._id %>">
-								<%- include('icons/liked.svg'); %>
-							</button>
-							<button class="disliked-button" data-id="<%= liked[i]._id %>">
-								<%- include('icons/disliked.svg'); %>
-							</button>
-							<button class="update-button">
-								<%- include('icons/update.svg'); %>
-							</button>
-							<button class="delete-button" data-id="<%= liked[i]._id %>" data-album="<%= liked[i].name %> - <%= liked[i].album %>">
-								<%- include('icons/delete.svg'); %>
-							</button>
-						</li>
-						<% } %>
-					</ul>
-				</div>
-				<div id="disliked">
-					<div class="list-heading">
-						<h3>Disliked</h3>
-						<button class="show-button"><%- include('icons/eye-solid.svg'); %></button>
-						<button class="hide-button hide"><%- include('icons/eye-slash-solid.svg'); %></button>
+								<button
+									class="disliked-button"
+									data-id="<%= liked[i]._id %>"
+								>
+									<%- include('icons/disliked.svg'); %>
+								</button>
+								<button class="update-button">
+									<%- include('icons/update.svg'); %>
+								</button>
+								<button
+									class="delete-button"
+									data-id="<%= liked[i]._id %>"
+									data-album="<%= liked[i].name %> - <%= liked[i].album %>"
+								>
+									<%- include('icons/delete.svg'); %>
+								</button>
+							</li>
+							<% } %>
+						</ul>
 					</div>
-					<ul>
-						<li class="album album-heading grid-row">
-							<div class="read-album">
-								<span class="album-artist">Artist/Band</span>
-								<span class="album-name">Album Name</span>
-							</div>
-						</li>
-						<% for(var i = 0; i < disliked.length; i++) {%>
-						<li class="album grid-row">
-							<div class="read-album">
-								<span class="album-artist"><%= disliked[i].name %></span>
-								<span class="album-name"><%= disliked[i].album %></span>
-							</div>
-							<div class="edit-album hide">
-								<form action="/update-album" method="POST">
-									<input type="text" name="album-artist" value="<%= disliked[i].name %>">
-									<input type="text" name="album-name" value="<%= disliked[i].album %>">
-									<input type="hidden" name="album-id" value="<%= disliked[i]._id %>">
-									<button class="save-button" type="submit">
-										<%- include('icons/save.svg'); %>
+					<div id="disliked">
+						<div class="list-heading">
+							<h3>Disliked</h3>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hide">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+						<ul>
+							<li class="album album-heading grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										>Artist/Band</span
+									>
+									<span class="album-name">Album Name</span>
+								</div>
+							</li>
+							<% for(var i = 0; i < disliked.length; i++) {%>
+							<li class="album grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										><%= disliked[i].name %></span
+									>
+									<span class="album-name"
+										><%= disliked[i].album %></span
+									>
+								</div>
+								<div class="edit-album hide">
+									<form action="/update-album" method="POST">
+										<input
+											type="text"
+											name="album-artist"
+											value="<%= disliked[i].name %>"
+										/>
+										<input
+											type="text"
+											name="album-name"
+											value="<%= disliked[i].album %>"
+										/>
+										<input
+											type="hidden"
+											name="album-id"
+											value="<%= disliked[i]._id %>"
+										/>
+										<button
+											class="save-button"
+											type="submit"
+										>
+											<%- include('icons/save.svg'); %>
+										</button>
+									</form>
+									<button class="cancel-button">
+										<%- include('icons/cancel.svg'); %>
 									</button>
-								</form>
-								<button class="cancel-button">
-									<%- include('icons/cancel.svg'); %>
+								</div>
+								<button
+									class="liked-button"
+									data-id="<%= disliked[i]._id %>"
+								>
+									<%- include('icons/liked.svg'); %>
 								</button>
-							</div>
-							<button class="liked-button" data-id="<%= disliked[i]._id %>">
-								<%- include('icons/liked.svg'); %>
-							</button>
-							<button class="disliked-button is-disliked" data-id="<%= disliked[i]._id %>">
-								<%- include('icons/disliked.svg'); %>
-							</button>
-							<button class="update-button">
-								<%- include('icons/update.svg'); %>
-							</button>
-							<button class="delete-button" data-id="<%= disliked[i]._id %>" data-album="<%= disliked[i].name %> - <%= disliked[i].album %>">
-								<%- include('icons/delete.svg'); %>
-							</button>
-						</li>
-						<% } %>
-					</ul>
-				</div>
-				<div id="archive">
-					<div class="list-heading">
-						<h3>Archived</h3>
-						<button class="show-button"><%- include('icons/eye-solid.svg'); %></button>
-						<button class="hide-button hide"><%- include('icons/eye-slash-solid.svg'); %></button>
+								<button
+									class="disliked-button is-disliked"
+									data-id="<%= disliked[i]._id %>"
+								>
+									<%- include('icons/disliked.svg'); %>
+								</button>
+								<button class="update-button">
+									<%- include('icons/update.svg'); %>
+								</button>
+								<button
+									class="delete-button"
+									data-id="<%= disliked[i]._id %>"
+									data-album="<%= disliked[i].name %> - <%= disliked[i].album %>"
+								>
+									<%- include('icons/delete.svg'); %>
+								</button>
+							</li>
+							<% } %>
+						</ul>
 					</div>
-					<ul>
-					<%
-					for (var i = 0; i < archiveDates.length; i++) {
-						for (var prop in archiveDates[i]) {
-						%>
-						<li><a href="archive?date=<%= prop %>" data-id="<%= prop %>"><%= archiveDates[i][prop] %></a></li>
-						<%
-						}
-					}
-					%>
-					</ul>
+					<div id="archive">
+						<div class="list-heading">
+							<h3>Archived</h3>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hide">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+						<ul>
+							<% for (var prop in archiveDates) { %>
+							<li>
+								<a
+									href="archive?date=<%= prop %>"
+									data-id="<%= prop %>"
+									><%= archiveDates[prop] %></a
+								>
+							</li>
+							<% } %>
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="transparent-overlay"></div>
-	</main>
-	<footer>
-		<button id="archive-button" class="pull-to-front">Archive & Clear</button>
-		<form class="pull-to-front" action="logout" method="POST">
-			<button type="submit">Logout</button>
-		</form>
-	</footer>
-    <script src="/main.js"></script>
-</body>
+			<div class="transparent-overlay"></div>
+		</main>
+		<footer>
+			<button id="archive-button" class="pull-to-front">
+				Archive & Clear
+			</button>
+			<form class="pull-to-front" action="logout" method="POST">
+				<button type="submit">Logout</button>
+			</form>
+		</footer>
+		<script src="/main.js"></script>
+	</body>
 </html>
