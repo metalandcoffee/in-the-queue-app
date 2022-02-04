@@ -1,8 +1,7 @@
-// Pull in environmental constants.
-require('dotenv').config();
+/**
+ * Required External Modules & App Variables
+ */
 const dateFns = require('date-fns');
-
-// External dependencies.
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -11,15 +10,22 @@ const session = require('express-session');
 const initPassPort = require('./passport-config');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
-const { use } = require('passport');
-const { ar } = require('date-fns/locale');
-const app = express();
 
-// Tell Express that we are using the EJS template engine.
-app.set('view engine', 'ejs');
+// Pull in environmental constants.
+require('dotenv').config();
 
-app.use(express.urlencoded({ extended: false }));
+/**
+ *  App Configuration
+ */
+const app = express(); // Start server.
+app.set('view engine', 'ejs'); // Set template engine too EJS.
+
+app.use(express.urlencoded({ extended: false })); // https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded
 app.use(express.json());
+app.use(express.static('public'));
+app.listen(process.env.PORT, function () { // Start listening on selected port.
+  console.log(`listening on ${process.env.PORT}`);
+});
 app.use(flash());
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -36,10 +42,7 @@ MongoClient.connect(process.env.DB_CONNECT)
     const albumsCollection = db.collection('albums');
     const usersCollection = db.collection('users');
 
-    app.use(express.static('public'));
-    app.listen(process.env.PORT, function () {
-      console.log(`listening on ${process.env.PORT}`);
-    });
+
 
     initPassPort(passport,
       getUserByEmail,
@@ -231,7 +234,7 @@ MongoClient.connect(process.env.DB_CONNECT)
         archive.map(album => {
           archiveDates[album.archive_date] = dateFns.format(album.archive_date, 'MMMM do, y');
         });
-        res.render('archive.ejs', { archiveDate: dateFns.format(Number(req.query.date), 'MMMM do, y'), albums: current, liked, disliked, archiveDates });
+        res.render('archive.ejs', { currentArchiveDate: req.query.date, archiveDate: dateFns.format(Number(req.query.date), 'MMMM do, y'), albums: current, liked, disliked, archiveDates });
       } catch (e) {
         console.log(e);
       }
@@ -256,8 +259,6 @@ MongoClient.connect(process.env.DB_CONNECT)
     });
   })
   .catch(error => console.error(error));
-
-
 
 // Auth functions.
 function checkAuthenticated(req, res, next) {

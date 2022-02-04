@@ -1,27 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>🎧In the Queue🎧<</title>
-		<link rel="stylesheet" href="main.css" />
-	</head>
-	<body>
+	<%- include( 'partials/metadata.ejs' ) %>
+	<body class="archive">
 		<main class="bg-color-purple">
-			<div class="container pull-to-front">
-				<h1>🎧In the Queue🎧<</h1>
-				<h2 class="tagline">
-					Track the new music you are listen to and judge it
-					accordingly!
-				</h2>
-				<h3><%= archiveDate %> Archive</h3>
-			</div>
+			<%- include( 'partials/title.ejs' ) %>
 			<div class="bg-color-transparent padding-1">
 				<div class="container pull-to-front">
+					<h3><%= archiveDate %></h3>
 					<div id="current">
 						<div class="list-heading">
-							<h3>Current Album List</h3>
+							<h4>Current Album List</h4>
 							<button class="show-button">
 								<%- include('icons/eye-solid.svg'); %>
 							</button>
@@ -55,7 +43,7 @@
 					</div>
 					<div id="liked">
 						<div class="list-heading">
-							<h3>Liked</h3>
+							<h4>Liked</h4>
 							<button class="show-button">
 								<%- include('icons/eye-solid.svg'); %>
 							</button>
@@ -88,7 +76,7 @@
 					</div>
 					<div id="disliked">
 						<div class="list-heading">
-							<h3>Disliked</h3>
+							<h4>Disliked</h4>
 							<button class="show-button">
 								<%- include('icons/eye-solid.svg'); %>
 							</button>
@@ -121,7 +109,7 @@
 					</div>
 					<div id="archive">
 						<div class="list-heading">
-							<h3>Archived</h3>
+							<h4>Archived</h4>
 							<button class="show-button">
 								<%- include('icons/eye-solid.svg'); %>
 							</button>
@@ -132,11 +120,15 @@
 						<ul>
 							<% for (var prop in archiveDates) { %>
 							<li>
+								<% if ( currentArchiveDate !== prop ) { %>
 								<a
 									href="archive?date=<%= prop %>"
 									data-id="<%= prop %>"
 									><%= archiveDates[prop] %></a
 								>
+								<% } else { %>
+								<span><%= archiveDates[prop] %></span>
+								<% } %>
 							</li>
 							<% } %>
 						</ul>
@@ -151,6 +143,6 @@
 				<button type="submit">Logout</button>
 			</form>
 		</footer>
-		<script src="/main.js"></script>
+		<%- include( 'partials/scripts.ejs' ) %>
 	</body>
 </html>

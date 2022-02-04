@@ -1,21 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Music Discovery Tracker</title>
-		<link rel="stylesheet" href="main.css" />
-	</head>
+	<%- include( 'partials/metadata.ejs' ) %>
 	<body>
 		<main class="bg-color-pink">
-			<div class="container pull-to-front">
-				<h1>🎧In the Queue🎧</h1>
-				<h2 class="tagline">
-					Track the new music you are listen to and judge it
-					accordingly!
-				</h2>
-			</div>
+			<%- include( 'partials/title.ejs' ) %>
 			<div class="bg-color-transparent padding-1">
 				<div class="container pull-to-front">
 					<h3>Add An Album</h3>
@@ -62,79 +50,8 @@
 								<%- include('icons/eye-slash-solid.svg'); %>
 							</button>
 						</div>
-
-						<ul>
-							<li class="album album-heading grid-row">
-								<div class="read-album">
-									<span class="album-artist"
-										>Artist/Band</span
-									>
-									<span class="album-name">Album Name</span>
-								</div>
-							</li>
-							<% for(var i = 0; i < albums.length; i++) {%>
-							<li class="album grid-row">
-								<div class="read-album">
-									<span class="album-artist"
-										><%= albums[i].name %></span
-									>
-									<span class="album-name"
-										><%= albums[i].album %></span
-									>
-								</div>
-								<div class="edit-album hide">
-									<form action="/update-album" method="POST">
-										<input
-											type="text"
-											name="album-artist"
-											value="<%= albums[i].name %>"
-										/>
-										<input
-											type="text"
-											name="album-name"
-											value="<%= albums[i].album %>"
-										/>
-										<input
-											type="hidden"
-											name="album-id"
-											value="<%= albums[i]._id %>"
-										/>
-										<button
-											class="save-button"
-											type="submit"
-										>
-											<%- include('icons/save.svg'); %>
-										</button>
-									</form>
-									<button class="cancel-button">
-										<%- include('icons/cancel.svg'); %>
-									</button>
-								</div>
-								<button
-									class="liked-button"
-									data-id="<%= albums[i]._id %>"
-								>
-									<%- include('icons/liked.svg'); %>
-								</button>
-								<button
-									class="disliked-button"
-									data-id="<%= albums[i]._id %>"
-								>
-									<%- include('icons/disliked.svg'); %>
-								</button>
-								<button class="update-button">
-									<%- include('icons/update.svg'); %>
-								</button>
-								<button
-									class="delete-button"
-									data-id="<%= albums[i]._id %>"
-									data-album="<%= albums[i].name %> - <%= albums[i].album %>"
-								>
-									<%- include('icons/delete.svg'); %>
-								</button>
-							</li>
-							<% } %>
-						</ul>
+						<%- include( 'partials/list.ejs', { albums, isLiked:
+						false, isDisliked: false } ) %>
 					</div>
 					<div id="liked">
 						<div class="list-heading">
@@ -146,78 +63,8 @@
 								<%- include('icons/eye-slash-solid.svg'); %>
 							</button>
 						</div>
-						<ul>
-							<li class="album album-heading grid-row">
-								<div class="read-album">
-									<span class="album-artist"
-										>Artist/Band</span
-									>
-									<span class="album-name">Album Name</span>
-								</div>
-							</li>
-							<%for(var i = 0; i < liked.length; i++) {%>
-							<li class="album grid-row">
-								<div class="read-album">
-									<span class="album-artist"
-										><%= liked[i].name %></span
-									>
-									<span class="album-name"
-										><%= liked[i].album %></span
-									>
-								</div>
-								<div class="edit-album hide">
-									<form action="/update-album" method="POST">
-										<input
-											type="text"
-											name="album-artist"
-											value="<%= liked[i].name %>"
-										/>
-										<input
-											type="text"
-											name="album-name"
-											value="<%= liked[i].album %>"
-										/>
-										<input
-											type="hidden"
-											name="album-id"
-											value="<%= liked[i]._id %>"
-										/>
-										<button
-											class="save-button"
-											type="submit"
-										>
-											<%- include('icons/save.svg'); %>
-										</button>
-									</form>
-									<button class="cancel-button">
-										<%- include('icons/cancel.svg'); %>
-									</button>
-								</div>
-								<button
-									class="liked-button is-liked"
-									data-id="<%= liked[i]._id %>"
-								>
-									<%- include('icons/liked.svg'); %>
-								</button>
-								<button
-									class="disliked-button"
-									data-id="<%= liked[i]._id %>"
-								>
-									<%- include('icons/disliked.svg'); %>
-								</button>
-								<button class="update-button">
-									<%- include('icons/update.svg'); %>
-								</button>
-								<button
-									class="delete-button"
-									data-id="<%= liked[i]._id %>"
-									data-album="<%= liked[i].name %> - <%= liked[i].album %>"
-								>
-									<%- include('icons/delete.svg'); %>
-								</button>
-							</li>
-							<% } %>
-						</ul>
+						<%- include( 'partials/list.ejs', { albums: liked,
+						isLiked: true, isDisliked: false } ) %>
 					</div>
 					<div id="disliked">
 						<div class="list-heading">
@@ -229,78 +76,8 @@
 								<%- include('icons/eye-slash-solid.svg'); %>
 							</button>
 						</div>
-						<ul>
-							<li class="album album-heading grid-row">
-								<div class="read-album">
-									<span class="album-artist"
-										>Artist/Band</span
-									>
-									<span class="album-name">Album Name</span>
-								</div>
-							</li>
-							<% for(var i = 0; i < disliked.length; i++) {%>
-							<li class="album grid-row">
-								<div class="read-album">
-									<span class="album-artist"
-										><%= disliked[i].name %></span
-									>
-									<span class="album-name"
-										><%= disliked[i].album %></span
-									>
-								</div>
-								<div class="edit-album hide">
-									<form action="/update-album" method="POST">
-										<input
-											type="text"
-											name="album-artist"
-											value="<%= disliked[i].name %>"
-										/>
-										<input
-											type="text"
-											name="album-name"
-											value="<%= disliked[i].album %>"
-										/>
-										<input
-											type="hidden"
-											name="album-id"
-											value="<%= disliked[i]._id %>"
-										/>
-										<button
-											class="save-button"
-											type="submit"
-										>
-											<%- include('icons/save.svg'); %>
-										</button>
-									</form>
-									<button class="cancel-button">
-										<%- include('icons/cancel.svg'); %>
-									</button>
-								</div>
-								<button
-									class="liked-button"
-									data-id="<%= disliked[i]._id %>"
-								>
-									<%- include('icons/liked.svg'); %>
-								</button>
-								<button
-									class="disliked-button is-disliked"
-									data-id="<%= disliked[i]._id %>"
-								>
-									<%- include('icons/disliked.svg'); %>
-								</button>
-								<button class="update-button">
-									<%- include('icons/update.svg'); %>
-								</button>
-								<button
-									class="delete-button"
-									data-id="<%= disliked[i]._id %>"
-									data-album="<%= disliked[i].name %> - <%= disliked[i].album %>"
-								>
-									<%- include('icons/delete.svg'); %>
-								</button>
-							</li>
-							<% } %>
-						</ul>
+						<%- include( 'partials/list.ejs', { albums: disliked,
+						isLiked: false, isDisliked: true } ) %>
 					</div>
 					<div id="archive">
 						<div class="list-heading">
@@ -336,6 +113,6 @@
 				<button type="submit">Logout</button>
 			</form>
 		</footer>
-		<script src="/main.js"></script>
+		<%- include( 'partials/scripts.ejs' ) %>
 	</body>
 </html>

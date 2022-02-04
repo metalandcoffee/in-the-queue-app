@@ -1,0 +1,64 @@
+<!-- views/partials/list.ejs -->
+<ul>
+	<li class="album album-heading grid-row">
+		<div class="read-album">
+			<span class="album-artist">Artist/Band</span>
+			<span class="album-name">Album Name</span>
+		</div>
+	</li>
+	<% for(var i = 0; i < albums.length; i++) {%>
+	<li class="album grid-row">
+		<div class="read-album">
+			<span class="album-artist"><%= albums[i].name %></span>
+			<span class="album-name"><%= albums[i].album %></span>
+		</div>
+		<div class="edit-album hide">
+			<form action="/update-album" method="POST">
+				<input
+					type="text"
+					name="album-artist"
+					value="<%= albums[i].name %>"
+				/>
+				<input
+					type="text"
+					name="album-name"
+					value="<%= albums[i].album %>"
+				/>
+				<input
+					type="hidden"
+					name="album-id"
+					value="<%= albums[i]._id %>"
+				/>
+				<button class="save-button" type="submit">
+					<%- include('../icons/save.svg'); %>
+				</button>
+			</form>
+			<button class="cancel-button">
+				<%- include('../icons/cancel.svg'); %>
+			</button>
+		</div>
+		<button
+			class="liked-button<%- isLiked ? ' is-liked' : '' %>"
+			data-id="<%= albums[i]._id %>"
+		>
+			<%- include('../icons/liked.svg'); %>
+		</button>
+		<button
+			class="disliked-button<%- isDisliked ? ' is-disliked' : '' %>"
+			data-id="<%= albums[i]._id %>"
+		>
+			<%- include('../icons/disliked.svg'); %>
+		</button>
+		<button class="update-button">
+			<%- include('../icons/update.svg'); %>
+		</button>
+		<button
+			class="delete-button"
+			data-id="<%= albums[i]._id %>"
+			data-album="<%= albums[i].name %> - <%= albums[i].album %>"
+		>
+			<%- include('../icons/delete.svg'); %>
+		</button>
+	</li>
+	<% } %>
+</ul>

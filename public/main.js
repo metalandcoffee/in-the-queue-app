@@ -151,8 +151,6 @@ archiveContainer.addEventListener( 'click', function(e) {
         return;
     }  
 
-    console.log('hiiii');
-
     fetch('/get-archive', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },

@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Music Discovery Tracker</title>
-	<link rel="stylesheet" href="main.css">
-</head>
-<body>
-    <h1>Register</h1>
-    <form action="/register" method="POST">
-        <label>Name:
-            <input name="name" autocomplete="name" required>
-        </label>
-        <label>Email:
-            <input name="email" autocomplete="email" required>
-        </label>
-        <label>Password:
-            <input name="password" type="password" required>
-        </label>
-        <button type="submit">Register</button>
-    </form>
-    <a href="/login">Login</a>
-</body>
+	<%- include( 'partials/metadata.ejs' ) %>
+	<body>
+		<h1>Register</h1>
+		<form action="/register" method="POST">
+			<label
+				>Name:
+				<input name="name" autocomplete="name" required />
+			</label>
+			<label
+				>Email:
+				<input name="email" autocomplete="email" required />
+			</label>
+			<label
+				>Password:
+				<input name="password" type="password" required />
+			</label>
+			<button type="submit">Register</button>
+		</form>
+		<a href="/login">Login</a>
+		<%- include( 'partials/scripts.ejs' ) %>
+	</body>
+</html>
