@@ -147,6 +147,7 @@ footer a:visited {
 	display: flex;
 	justify-content: space-between;
 	max-width: 32rem;
+	align-items: center;
 }
 
 .archive .read-album {
@@ -185,7 +186,7 @@ footer a:visited {
 .album.grid-row {
 	grid-template-columns: 1fr repeat(4, auto);
 	padding: 0.2rem;
-	height: 2rem;
+	height: 5rem;
 }
 
 .album.grid-row:hover:not(:first-child) {

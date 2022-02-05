@@ -1,18 +1,23 @@
 /**
  * Required External Modules & App Variables
  */
-const dateFns = require('date-fns');
-const express = require('express');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
-const flash = require('express-flash');
-const session = require('express-session');
-const initPassPort = require('./passport-config');
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectId;
+import fetch from 'node-fetch'
+import dateFns from 'date-fns'
+import express from 'express'
+import bcrypt from 'bcrypt'
+import passport from 'passport'
+import flash from 'express-flash'
+import session from 'express-session'
+import mongo from 'mongodb'
+import dotenv from 'dotenv'
+
+/**
+ * Internal dependencies
+ */
+import initPassPort from './passport-config.js'
 
 // Pull in environmental constants.
-require('dotenv').config();
+dotenv.config();
 
 /**
  *  App Configuration
@@ -35,7 +40,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-MongoClient.connect(process.env.DB_CONNECT)
+mongo.MongoClient.connect(process.env.DB_CONNECT)
   .then(client => {
     console.log('Connected to Database');
     const db = client.db('metal-albums');
@@ -54,7 +59,7 @@ MongoClient.connect(process.env.DB_CONNECT)
     }
 
     async function getUserById(id) {
-      return await usersCollection.findOne({ _id: ObjectId(id) });
+      return await usersCollection.findOne({ _id: mongo.ObjectId(id) });
     }
 
     // Login Endpoint.
@@ -140,16 +145,27 @@ MongoClient.connect(process.env.DB_CONNECT)
     })
 
     // Album Add Endpoint.
-    app.post('/add-album', (req, res) => {
+    app.post('/add-album', async (req, res) => {
+
+      const response = await fetch(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=${encodeURIComponent(req.body['name'])}&album=${encodeURIComponent(req.body['album'])}&api_key=${process.env.LASTFM_API_KEY}&format=json`);
+      const data = await response.json();
+      let albumCover = '';
+      // Album not found response: { message: 'Album not found', error: 6 }
+      if (data.message === undefined) {
+        console.log(data.album.image[1]['#text']);
+        albumCover = data.album.image[1]['#text'];
+      }
+
       albumsCollection.insertOne(
         {
           name: req.body['name'],
           album: req.body['album'],
-          status: 'none'
+          status: 'none',
+          image: data.album.image[1]['#text']
         }
       )
         .then(result => {
-          res.redirect('/');
+          res.json(`Successfully added.`);
         })
         .catch(error => console.error(error));
     });
@@ -157,7 +173,7 @@ MongoClient.connect(process.env.DB_CONNECT)
     // Album Update Endpoint.
     app.post('/update-album', (req, res) => {
       albumsCollection.updateOne(
-        { _id: ObjectId(req.body['album-id']) },
+        { _id: mongo.ObjectId(req.body['album-id']) },
         {
           $set: {
             "name": req.body['album-artist'],
@@ -174,7 +190,7 @@ MongoClient.connect(process.env.DB_CONNECT)
     // Album Delete Endpoint.
     app.delete('/albums', (req, res) => {
       albumsCollection.deleteOne(
-        { _id: ObjectId(req.body['album-id']) }
+        { _id: mongo.ObjectId(req.body['album-id']) }
       )
         .then(result => {
           if (result.deletedCount === 0) {
@@ -188,7 +204,7 @@ MongoClient.connect(process.env.DB_CONNECT)
     // Album Post Endpoint.
     app.post('/albums', (req, res) => {
       albumsCollection.updateOne(
-        { _id: ObjectId(req.body['album-id']) },
+        { _id: mongo.ObjectId(req.body['album-id']) },
         { $set: { status: req.body['status'] } }
       )
         .then(result => {
