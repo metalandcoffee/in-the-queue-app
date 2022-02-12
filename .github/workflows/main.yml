@@ -1,6 +1,6 @@
-on: 
- pull_request:
-  types: [closed] 
+on:
+  push:
+    branches : [ "main" ]
 jobs:
   glitch-sync:
     if: github.event.pull_request.merged == true
