@@ -19,7 +19,6 @@ import initPassPort from './passport-config.js'
 // Pull in environmental constants.
 dotenv.config();
 
-console.log('test');
 /**
  *  App Configuration
  */
