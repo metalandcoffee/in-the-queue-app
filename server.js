@@ -11,6 +11,7 @@ import session from 'express-session'
 import mongo from 'mongodb'
 import dotenv from 'dotenv'
 
+console.log(`metalandcoffee`);
 /**
  * Internal dependencies
  */
