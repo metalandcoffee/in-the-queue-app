@@ -46,7 +46,7 @@ mongo.MongoClient.connect(process.env.DB_CONNECT)
   .then(client => {
     console.log('Connected to Database');
     const db = client.db('metal-albums');
-    const albumsCollection = db.collection('albums-test');
+    const albumsCollection = db.collection('albums');
     const usersCollection = db.collection('users');
 
 
