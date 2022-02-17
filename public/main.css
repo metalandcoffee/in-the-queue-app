@@ -251,4 +251,8 @@ footer a:visited {
 		height: auto;
 		border-bottom: solid 1px #4a4a5f;
 	}
+
+	form.add-album.grid-row {
+		grid-template-columns: 1fr;
+	}
 }
