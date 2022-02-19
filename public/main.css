@@ -118,6 +118,10 @@ footer a:visited {
 	text-decoration: none;
 }
 
+.list-heading {
+	margin-top: 1.5rem;
+}
+
 .cancel-button {
 	align-items: center;
 }
@@ -138,10 +142,11 @@ footer a:visited {
 	color: var(--red);
 }
 
-.album-heading {
+.album.grid-row.album-heading {
 	padding-bottom: 0.5rem;
 	border-bottom: 1px solid currentColor;
 	margin-bottom: 0.5rem;
+	height: auto;
 }
 
 .album-heading .album-artist {
@@ -283,9 +288,5 @@ footer a:visited {
 	button {
 		display: inline-block;
 		margin: 0 5px;
-	}
-
-	.list-heading {
-		margin-top: 1.5rem;
 	}
 }
