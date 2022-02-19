@@ -25,12 +25,6 @@
 					<div id="current">
 						<div class="list-heading">
 							<h3>Current Album List</h3>
-							<button class="show-button">
-								<%- include('icons/eye-solid.svg'); %>
-							</button>
-							<button class="hide-button hide">
-								<%- include('icons/eye-slash-solid.svg'); %>
-							</button>
 						</div>
 						<%- include( 'partials/list.ejs', { albums, isLiked:
 						false, isDisliked: false } ) %>
@@ -38,12 +32,6 @@
 					<div id="liked">
 						<div class="list-heading">
 							<h3>Liked</h3>
-							<button class="show-button">
-								<%- include('icons/eye-solid.svg'); %>
-							</button>
-							<button class="hide-button hide">
-								<%- include('icons/eye-slash-solid.svg'); %>
-							</button>
 						</div>
 						<%- include( 'partials/list.ejs', { albums: liked,
 						isLiked: true, isDisliked: false } ) %>
@@ -51,12 +39,6 @@
 					<div id="disliked">
 						<div class="list-heading">
 							<h3>Disliked</h3>
-							<button class="show-button">
-								<%- include('icons/eye-solid.svg'); %>
-							</button>
-							<button class="hide-button hide">
-								<%- include('icons/eye-slash-solid.svg'); %>
-							</button>
 						</div>
 						<%- include( 'partials/list.ejs', { albums: disliked,
 						isLiked: false, isDisliked: true } ) %>
@@ -64,12 +46,6 @@
 					<div id="archive">
 						<div class="list-heading">
 							<h3>Archived</h3>
-							<button class="show-button">
-								<%- include('icons/eye-solid.svg'); %>
-							</button>
-							<button class="hide-button hide">
-								<%- include('icons/eye-slash-solid.svg'); %>
-							</button>
 						</div>
 						<ul>
 							<% for (var prop in archiveDates) { %>

@@ -71,6 +71,7 @@ a:hover {
 }
 
 ul {
+	margin: 0;
 	list-style: none;
 	padding: 0;
 }
@@ -143,9 +144,13 @@ footer a:visited {
 	margin-bottom: 0.5rem;
 }
 
+.album-heading .album-artist {
+	grid-column-start: 2;
+}
+
 .read-album {
-	display: flex;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
 	max-width: 32rem;
 	align-items: center;
 }
@@ -194,7 +199,7 @@ footer a:visited {
 }
 
 .hide {
-	display: none;
+	display: none !important;
 }
 
 .bg-color-pink {
@@ -234,25 +239,53 @@ footer a:visited {
 	z-index: 1;
 }
 
+.toggle-visibility {
+	justify-self: start;
+}
+
 @media (max-width: 500px) {
 	header {
 		padding: 14px;
 	}
 
 	h1 {
-		font-size: 2.8rem;
+		font-size: 2.5rem;
 	}
 
 	h2 {
 		font-size: 1.5rem;
 	}
 
-	.album.grid-row:not(:first-child) {
+	.album.grid-row.album-heading {
+		align-items: end;
 		height: auto;
-		border-bottom: solid 1px #4a4a5f;
+	}
+
+	.read-album {
+		grid-column: 1 / -1;
+		justify-items: start;
+		margin-bottom: 0.5rem;
+	}
+
+	.album.grid-row:not(:first-child) {
+		display: block;
+		height: auto;
+	}
+
+	.album.grid-row:nth-child(even) {
+		background-color: rgba(69, 69, 69, 0.3);
 	}
 
 	form.add-album.grid-row {
 		grid-template-columns: 1fr;
+	}
+
+	button {
+		display: inline-block;
+		margin: 0 5px;
+	}
+
+	.list-heading {
+		margin-top: 1.5rem;
 	}
 }

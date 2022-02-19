@@ -5,7 +5,7 @@ const cancelBtns = document.querySelectorAll('.cancel-button');
 const saveBtns = document.querySelectorAll('.save-button');
 const thumbsUpBtns = document.querySelectorAll('.liked-button');
 const thumbsDownBtns = document.querySelectorAll('.disliked-button');
-const headings = document.querySelectorAll('.list-heading');
+const toggleLists = document.querySelectorAll('.toggle-visibility');
 const archive = document.getElementById('archive-button');
 const archiveContainer = document.querySelector('#archive ul');
 const addAlbum = document.getElementById('add-album-button');
@@ -38,18 +38,25 @@ addAlbum.addEventListener('click', function (e) {
         });
 });
 
-Array.from(headings).map((heading) => {
-    heading.addEventListener('click', (e) => {
-        if (e.target.tagName !== 'BUTTON') {
-            return;
-        }
+Array.from(toggleLists).map((toggleList) => {
+    toggleList.addEventListener('click', (e) => {
+        console.log(e);
+        const albums = e.target.closest('ul').querySelectorAll(".album:not(.album-heading)");
         e.target.classList.add('hide');
         if (e.target.classList.contains('show-button')) {
             e.target.parentElement.querySelector('.hide-button').classList.remove('hide');
-            e.target.parentElement.parentElement.querySelector('ul').classList.add('hide');
+            albums.forEach(
+                function (el) {
+                    el.classList.add('hide');
+                }
+            );
         } else {
             e.target.parentElement.querySelector('.show-button').classList.remove('hide');
-            e.target.parentElement.parentElement.querySelector('ul').classList.remove('hide');
+            albums.forEach(
+                function (el) {
+                    el.classList.remove('hide');
+                }
+            );
         }
 
     });
