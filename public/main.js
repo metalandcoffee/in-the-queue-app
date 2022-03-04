@@ -195,3 +195,8 @@ archiveContainer.addEventListener('click', function (e) {
         })
     });
 });
+
+// Tooltips.
+tippy('.img-container', {
+    content: 'My tooltip!',
+});

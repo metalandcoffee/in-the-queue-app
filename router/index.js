@@ -82,7 +82,6 @@ router.post('/add-album', async (req, res) => {
 	const response = await fetch(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=${encodeURIComponent(req.body['name'])}&album=${encodeURIComponent(req.body['album'])}&api_key=${process.env.LASTFM_API_KEY}&format=json`);
 	const data = await response.json();
 	let albumCover = '';
-	// Album not found response: { message: 'Album not found', error: 6 }
 	if (data.message === undefined) {
 		albumCover = data.album.image[1]['#text'];
 	}

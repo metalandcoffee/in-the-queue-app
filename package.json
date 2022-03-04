@@ -9,7 +9,7 @@
 	},
 	"author": "",
 	"engines": {
-		"node": "^12.0"
+		"node": "^15.0"
 	},
 	"license": "ISC",
 	"dependencies": {
@@ -24,7 +24,8 @@
 		"mongodb": "^4.0.0",
 		"node-fetch": "^2.6.7",
 		"passport": "^0.4.1",
-		"passport-local": "^1.0.0"
+		"passport-local": "^1.0.0",
+		"tippy.js": "^6.3.7"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.12"

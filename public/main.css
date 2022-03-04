@@ -23,7 +23,9 @@ html {
 }
 
 body {
-	font-family: Circular, sans-serif;
+	font-family: noto-sans-cjk-kr, sans-serif;
+	font-weight: 400;
+	font-style: normal;
 	color: var(--grey);
 	background-color: var(--black);
 	margin: 0;
@@ -35,6 +37,9 @@ h3,
 h4,
 h5,
 h6 {
+	font-family: cy, sans-serif;
+	font-weight: 700;
+	font-style: normal;
 	color: var(--white);
 	margin-top: 0;
 	margin-bottom: 1rem;
