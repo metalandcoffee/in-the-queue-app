@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt'
 export default function initialize(passport, getUserByEmail, getUserById) {
     const authenticateUser = async (email, password, done) => {
         const user = await getUserByEmail(email);
-        console.log(user);
 
         if (user == undefined) {
             return done(null, false, { message: 'Invalid login.' });

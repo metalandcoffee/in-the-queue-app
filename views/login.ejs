@@ -3,7 +3,9 @@
 	<%- include( 'partials/metadata.ejs' ) %>
 	<body>
 		<h1>Login</h1>
-		<% if (messages.error) { %> <%= messages.error %> <% } %> <% if (
+		<% if (messages.error) { %>
+			<h2 class='error-message'><%= messages.error %></h2>
+		<% } %> <% if (
 		undefined !== referer && referer.includes('register') ) { %>
 		<h2>You have registered successfully. 🤘🏾</h2>
 		<% } %>
