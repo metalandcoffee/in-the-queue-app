@@ -3,7 +3,6 @@
  */
 
 // External Dependencies.
-import dateFns from 'date-fns'
 import passport from 'passport'
 import fetch from 'node-fetch'
 import mongo from 'mongodb'
@@ -11,49 +10,38 @@ import mongo from 'mongodb'
 // Internal Dependencies.
 import router from './router.js'
 import { client } from '../mongo.client.js'
-import { checkAuthenticated, checkNotAuthenticated } from '../helpers.js'
+import {
+	checkAuthenticated,
+	checkNotAuthenticated,
+	getCurrentListData
+} from '../helpers.js'
 
 /**
  * Home Endpoint
  */
 router.get('/', checkAuthenticated, async function (req, res) {
 	const db = client.db('metal-albums').collection('albums');
-	const current = await db.find(
-		{
-			status: 'none',
-			is_archive: { "$exists": false }
-		}
-	)
-		.toArray();
-	const liked = await db.find(
-		{
-			status: 'liked',
-			is_archive: { "$exists": false }
-		},
-	)
-		.toArray();
-	const disliked = await db.find(
-		{
-			status: 'disliked',
-			is_archive: { "$exists": false }
-		}
-	)
-		.toArray();
-
-	const archive = await db.find(
-		{
-			archive_date: { "$exists": true }
-		},
-		{
-			projection: { _id: 0, archive_date: 1 }
-		}
-	)
-		.toArray();
-	const archiveDates = {};
-	archive.map(album => {
-		archiveDates[album.archive_date] = dateFns.format(album.archive_date, 'MMMM do, y');
-	});
+	const {
+		current,
+		liked,
+		disliked,
+		archiveDates
+	} = await getCurrentListData(db);
 	res.render('index.ejs', { albums: current, liked, disliked, archiveDates });
+});
+
+/**
+ * Read-Only Endpoint
+ */
+router.get('/read-only', async function (req, res) {
+	const db = client.db('metal-albums').collection('albums');
+	const {
+		current,
+		liked,
+		disliked,
+		archiveDates
+	} = await getCurrentListData(db);
+	res.render('read-only.ejs', { albums: current, liked, disliked, archiveDates });
 });
 
 /**
@@ -214,13 +202,3 @@ router.post('/archive', async (req, res) => {
 
 // Export module.
 export default router
-
-
-/**
- * scratch pad
- */
-// middleware that is specific to this router
-// router.use((req, res, next) => {
-//   console.log('Time: ', Date.now())
-//   next()
-// })

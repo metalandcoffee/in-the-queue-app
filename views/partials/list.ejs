@@ -48,6 +48,7 @@
 				<%- include('../icons/cancel.svg'); %>
 			</button>
 		</div>
+		<% if (!readOnly) { %>
 		<button
 			class="liked-button<%- isLiked ? ' is-liked' : '' %>"
 			data-id="<%= albums[i]._id %>"
@@ -70,6 +71,7 @@
 		>
 			<%- include('../icons/delete.svg'); %>
 		</button>
+		<% } %>
 	</li>
 	<% } %>
 </ul>
