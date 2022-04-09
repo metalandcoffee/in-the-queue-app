@@ -6,7 +6,8 @@
 	"type": "module",
 	"scripts": {
 		"start": "node server.js",
-		"dev": "nodemon server.js"
+		"dev": "nodemon server.js",
+		"js:lint": "./node_modules/.bin/eslint *.js"
 	},
 	"author": "",
 	"engines": {
@@ -29,6 +30,9 @@
 		"tippy.js": "^6.3.7"
 	},
 	"devDependencies": {
+		"eslint": "^8.13.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-plugin-import": "^2.26.0",
 		"nodemon": "^2.0.12"
 	}
 }
