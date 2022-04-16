@@ -1,27 +1,23 @@
 <!-- views/partials/list.ejs -->
-<ul>
-	<li class="album album-heading grid-row">
-		<div class="read-album">
-			<div class="toggle-visibility">
-				<button class="show-button">
-					<%- include('../icons/eye-solid.svg'); %>
-				</button>
-				<button class="hide-button hide">
-					<%- include('../icons/eye-slash-solid.svg'); %>
-				</button>
-			</div>
-			<span class="album-artist">Artist/Band</span>
-			<span class="album-name">Album Name</span>
+<ul class="album-list">
+	<li class="album-list-item album-heading">
+		<div class="toggle-visibility">
+			<button class="show-button">
+				<%- include('../icons/eye-solid.svg'); %>
+			</button>
+			<button class="hide-button hide">
+				<%- include('../icons/eye-slash-solid.svg'); %>
+			</button>
 		</div>
+		<span class="album-artist">Artist/Band</span>
+		<span class="album-name">Album Name</span>
 	</li>
 	<% for(var i = 0; i < albums.length; i++) {%>
-	<li class="album grid-row">
-		<div class="read-album">
-			<div class="img-container">
-				<img src="<%= albums[i].image %>" alt="" />
-			</div>
-			<span class="album-artist"><%= albums[i].name %></span>
-			<span class="album-name"><%= albums[i].album %></span>
+	<li class="album-list-item">
+		<img src="<%= albums[i].image %>" alt="" />
+		<div class="album-details">
+			<span class="name"><%= albums[i].album %></span>
+			<span class="artist"><%= albums[i].name %></span>
 		</div>
 		<div class="edit-album hide">
 			<form action="/update-album" method="POST">
@@ -49,28 +45,30 @@
 			</button>
 		</div>
 		<% if (!readOnly) { %>
-		<button
-			class="liked-button<%- isLiked ? ' is-liked' : '' %>"
-			data-id="<%= albums[i]._id %>"
-		>
-			<%- include('../icons/liked.svg'); %>
-		</button>
-		<button
-			class="disliked-button<%- isDisliked ? ' is-disliked' : '' %>"
-			data-id="<%= albums[i]._id %>"
-		>
-			<%- include('../icons/disliked.svg'); %>
-		</button>
-		<button class="update-button">
-			<%- include('../icons/update.svg'); %>
-		</button>
-		<button
-			class="delete-button"
-			data-id="<%= albums[i]._id %>"
-			data-album="<%= albums[i].name %> - <%= albums[i].album %>"
-		>
-			<%- include('../icons/delete.svg'); %>
-		</button>
+		<div class="album-controls">
+			<button
+				class="liked-button<%- isLiked ? ' is-liked' : '' %>"
+				data-id="<%= albums[i]._id %>"
+			>
+				<%- include('../icons/liked.svg'); %>
+			</button>
+			<button
+				class="disliked-button<%- isDisliked ? ' is-disliked' : '' %>"
+				data-id="<%= albums[i]._id %>"
+			>
+				<%- include('../icons/disliked.svg'); %>
+			</button>
+			<button class="update-button">
+				<%- include('../icons/update.svg'); %>
+			</button>
+			<button
+				class="delete-button"
+				data-id="<%= albums[i]._id %>"
+				data-album="<%= albums[i].name %> - <%= albums[i].album %>"
+			>
+				<%- include('../icons/delete.svg'); %>
+			</button>
+		</div>
 		<% } %>
 	</li>
 	<% } %>
