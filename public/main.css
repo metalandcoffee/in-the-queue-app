@@ -19,8 +19,8 @@ html {
 }
 
 img {
-	height: 100px;
-	width: 100px;
+	height: auto;
+	width: 100%;
 }
 
 /* Typography */
@@ -72,14 +72,14 @@ svg {
 
 /* Utilities */
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 /* Album List */
 .album-list {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-auto-rows: 1fr;
+	grid-auto-rows: 100px;
 	margin: 0;
 	margin-bottom: 2rem;
 	padding: 0;
@@ -97,6 +97,16 @@ svg {
 	grid-column: 1 / -1;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+}
+
+.album-list-item .img-container {
+	align-self: stretch;
+}
+
+.album-list-item .img-container img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
 }
 
 .album-details {

@@ -10,12 +10,12 @@
 function toggleVisibility(e) {
   const list = e.target.closest('ul[data-list]');
   const btns = list.querySelectorAll('.toggle-visibility svg');
-  
-  if (btns.length !== 0) {
-    btns.forEach((btn) => { btn.classList.toggle('hidden'); });
-  }
   const albums = list.querySelectorAll('li:not(.album-heading)');
-  // console.log(list);
+  if (btns.length === 0 || albums.length === 0) {
+    return;
+  }
+  btns.forEach((btn) => { btn.classList.toggle('hidden'); });
+  albums.forEach((album) => { album.classList.toggle('hidden'); });
 }
 
 /**

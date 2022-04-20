@@ -10,7 +10,10 @@
 	</li>
 	<% for(var i = 0; i < albums.length; i++) {%>
 	<li class="album-list-item">
-		<img src="<%= albums[i].image %>" alt="" />
+		<div class="img-container">
+			<img src="<%= albums[i].image %>" alt="" />
+		</div>
+		
 		<div class="album-details">
 			<span class="name"><%= albums[i].album %></span>
 			<span class="artist"><%= albums[i].name %></span>
