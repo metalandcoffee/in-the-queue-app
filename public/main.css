@@ -61,8 +61,8 @@ h4 {
 }
 
 svg {
-	width: 1rem;
-	height: 1rem;
+	width: 2rem;
+	height: 2rem;
 }
 
 /* Layout */
@@ -71,21 +71,11 @@ svg {
 }
 
 /* Utilities */
-.hide {
+.hidden {
 	display: none;
 }
 
 /* Album List */
-.list-heading {
-	border-top: 6px solid black;
-	border-bottom: 3px solid black;
-	padding: 2rem 0;
-}
-
-.list-heading h3 {
-	margin: 0;
-}
-
 .album-list {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -119,3 +109,18 @@ svg {
 	font-weight: 900;
 }
 
+.list-heading {
+	border-top: 6px solid black;
+	border-bottom: 3px solid black;
+	padding: 2rem 0;
+}
+
+.list-heading h3 {
+	margin: 0;
+}
+
+.toggle-visibility button {
+	padding: 0;
+	background-color: transparent;
+	border-style: none;
+}

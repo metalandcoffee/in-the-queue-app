@@ -1,13 +1,9 @@
 <!-- views/partials/list.ejs -->
-<ul class="album-list">
+<ul class="album-list" data-list="<% if (isLiked) { %>js-liked<% } else if (isDisliked) { %>js-disliked<% } else { %>js-current<% } %>">
 	<li class="album-list-item album-heading">
 		<div class="toggle-visibility">
-			<button class="show-button">
-				<%- include('../icons/eye-solid.svg'); %>
-			</button>
-			<button class="hide-button hide">
-				<%- include('../icons/eye-slash-solid.svg'); %>
-			</button>
+			<%- include('../icons/eye-solid.svg'); %>
+			<%- include('../icons/eye-slash-solid.svg'); %>
 		</div>
 		<span class="album-artist">Artist/Band</span>
 		<span class="album-name">Album Name</span>
@@ -19,7 +15,7 @@
 			<span class="name"><%= albums[i].album %></span>
 			<span class="artist"><%= albums[i].name %></span>
 		</div>
-		<div class="edit-album hide">
+		<div class="edit-album hidden">
 			<form action="/update-album" method="POST">
 				<input
 					type="text"
