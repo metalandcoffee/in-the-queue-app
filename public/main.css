@@ -109,6 +109,14 @@ svg {
 	object-fit: cover;
 }
 
+.album-list-item .is-set[data-status="liked"] {
+	color: #51954e;
+}
+
+.album-list-item .is-set[data-status="disliked"] {
+	color: #d85959;
+}
+
 .album-details {
 	display: flex;
 	flex-direction: column;

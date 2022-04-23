@@ -1,7 +1,7 @@
 <!-- views/partials/list.ejs -->
 <ul class="album-list" data-list="<% if (isLiked) { %>js-liked<% } else if (isDisliked) { %>js-disliked<% } else { %>js-current<% } %>">
 	<li class="album-list-item album-heading">
-		<div class="toggle-visibility">
+		<div class="js-toggle-visibility">
 			<%- include('../icons/eye-solid.svg'); %>
 			<%- include('../icons/eye-slash-solid.svg'); %>
 		</div>
@@ -18,7 +18,7 @@
 			<span class="name"><%= albums[i].album %></span>
 			<span class="artist"><%= albums[i].name %></span>
 		</div>
-		<div class="edit-album hidden">
+		<div class="edit-controls hidden">
 			<form action="/update-album" method="POST">
 				<input
 					type="text"
@@ -35,33 +35,35 @@
 					name="album-id"
 					value="<%= albums[i]._id %>"
 				/>
-				<button class="save-button" type="submit">
+				<button class="js-save" type="submit">
 					<%- include('../icons/save.svg'); %>
 				</button>
 			</form>
-			<button class="cancel-button">
+			<button class="js-cancel">
 				<%- include('../icons/cancel.svg'); %>
 			</button>
 		</div>
 		<% if (!readOnly) { %>
 		<div class="album-controls">
 			<button
-				class="liked-button<%- isLiked ? ' is-liked' : '' %>"
+				class="js-liked<%- isLiked ? ' is-set' : '' %>"
 				data-id="<%= albums[i]._id %>"
+				data-status="liked"
 			>
 				<%- include('../icons/liked.svg'); %>
 			</button>
 			<button
-				class="disliked-button<%- isDisliked ? ' is-disliked' : '' %>"
+				class="js-disliked<%- isDisliked ? ' is-set' : '' %>"
 				data-id="<%= albums[i]._id %>"
+				data-status="disliked"
 			>
 				<%- include('../icons/disliked.svg'); %>
 			</button>
-			<button class="update-button">
+			<button class="js-update">
 				<%- include('../icons/update.svg'); %>
 			</button>
 			<button
-				class="delete-button"
+				class="js-delete"
 				data-id="<%= albums[i]._id %>"
 				data-album="<%= albums[i].name %> - <%= albums[i].album %>"
 			>

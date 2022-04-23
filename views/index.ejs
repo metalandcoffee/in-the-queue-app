@@ -5,7 +5,7 @@
 		<main class="bg-color-pink">
 			<%- include( 'partials/title.ejs' ) %>
 			<div class="bg-color-transparent padding-1">
-				<div class="container pull-to-front">
+				<div class="container">
 					<h3>Add An Album</h3>
 					<form class="grid-row add-album">
 						<input
@@ -18,9 +18,10 @@
 							placeholder="Name of Album"
 							name="album"
 						/>
-						<button id="add-album-button" type="submit">
+						<button id="js-add-album" type="submit">
 							<%- include('icons/plus.svg'); %>
 						</button>
+						<p class="alert"></p>
 					</form>
 					<div id="current">
 						<div class="list-heading">

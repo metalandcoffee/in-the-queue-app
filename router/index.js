@@ -14,6 +14,7 @@ import {
   checkAuthenticated,
   checkNotAuthenticated,
   getCurrentListData,
+  checkDbAccess,
 } from '../helpers.js';
 
 /**
@@ -69,7 +70,7 @@ router.post('/logout', (req, res) => {
 });
 
 // Album Add Endpoint.
-router.post('/add-album', async (req, res) => {
+router.post('/add-album', checkDbAccess, async (req, res) => {
   const response = await fetch(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=${encodeURIComponent(req.body.name)}&album=${encodeURIComponent(req.body.album)}&api_key=${process.env.LASTFM_API_KEY}&format=json`);
   const data = await response.json();
   let albumCover = '';
@@ -88,11 +89,11 @@ router.post('/add-album', async (req, res) => {
     .then(() => {
       res.json('Successfully added.');
     })
-    .catch((error) => console.error(error));
+    .catch((error) => res.status(500).json(error));
 });
 
 // Album Update Endpoint.
-router.post('/update-album', (req, res) => {
+router.post('/update-album', checkDbAccess, (req, res) => {
   client.db('metal-albums').collection('albums').updateOne(
     { _id: mongo.ObjectId(req.body['album-id']) },
     {
@@ -111,7 +112,7 @@ router.post('/update-album', (req, res) => {
 /**
  * Album Delete Endpoint
  */
-router.delete('/albums', (req, res) => {
+router.delete('/delete-album', checkDbAccess, (req, res) => {
   client.db('metal-albums').collection('albums').deleteOne(
     { _id: mongo.ObjectId(req.body['album-id']) },
   )
@@ -121,13 +122,13 @@ router.delete('/albums', (req, res) => {
       }
       return res.json('Successfully deleted.');
     })
-    .catch((error) => console.error(error));
+    .catch((error) => res.status(500).json(error));
 });
 
 /**
- * Album Post Endpoint.
+ * Album Status Post Endpoint.
  */
-router.post('/albums', (req, res) => {
+router.post('/toggle-status', checkDbAccess, (req, res) => {
   client.db('metal-albums').collection('albums').updateOne(
     { _id: mongo.ObjectId(req.body['album-id']) },
     { $set: { status: req.body.status } },
@@ -135,7 +136,7 @@ router.post('/albums', (req, res) => {
     .then(() => {
       res.json('Album status has been updated.');
     })
-    .catch((error) => console.error(error));
+    .catch((error) => res.status(500).json(error));
 });
 
 /**
@@ -185,7 +186,7 @@ router.get('/archive', async (req, res) => {
   }
 });
 
-router.post('/archive', async (req, res) => {
+router.post('/archive', checkDbAccess, async (req, res) => {
   try {
     const date = Date.now();
     await client.db('metal-albums').collection('albums').updateMany(
