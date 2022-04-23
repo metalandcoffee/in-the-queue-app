@@ -75,8 +75,10 @@ router.post('/add-album', checkDbAccess, async (req, res) => {
   const data = await response.json();
   let albumCover = '';
   if (data.message === undefined) {
-    albumCover = data.album.image[1]['#text'];
+    albumCover = data.album.image[3]['#text'];
   }
+  // Large album size.
+  console.log(data.album.image[3]);
 
   client.db('metal-albums').collection('albums').insertOne(
     {
