@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import clientPromise from '../lib/mongodb';
 
 export default function Home({albums}) {
   return (
@@ -45,12 +44,12 @@ export default function Home({albums}) {
 }
 
 export async function getServerSideProps(context) {
-  const client = await clientPromise;
 
-  const db = client.db('metal-albums');
 
-  let albums = await db.collection('albums').find({}).toArray();
-  albums = JSON.parse(JSON.stringify(albums));
+  const response = await fetch('http://localhost:3000/api/current/');
+  const albums = await response.json();
+
+  console.log(albums);
 
   return {
     props: { albums },
