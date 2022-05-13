@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import List from '../components/List'
 import styles from '../styles/Home.module.css'
 
-export default function Home({albums}) {
+export default function Home({current, liked, disliked}) {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,17 +16,9 @@ export default function Home({albums}) {
         <h1>In The Queue</h1>
       </header>
       <main className={styles.main}>
-      <div>
-        {albums.map((user, index) => {
-          return (
-            <div className="card" key={index}>
-              <h2>{user.name}</h2>
-              <p>{user.album}</p>
-              <p>{user.status}</p>
-            </div>
-          );
-        })}
-      </div>
+        <List heading="Listening to..." albums={current} />
+        <List heading="Liked Music" albums={liked} />
+        <List heading="Disliked Music" albums={disliked} />
       </main>
 
       <footer className={styles.footer}>
@@ -44,14 +38,20 @@ export default function Home({albums}) {
 }
 
 export async function getServerSideProps(context) {
+  let current = await fetch('http://localhost:3000/api/current/');
+  current = await current.json();
 
+  let liked = await fetch('http://localhost:3000/api/liked/');
+  liked = await liked.json();
 
-  const response = await fetch('http://localhost:3000/api/current/');
-  const albums = await response.json();
-
-  console.log(albums);
+  let disliked = await fetch('http://localhost:3000/api/disliked/');
+  disliked = await disliked.json();
 
   return {
-    props: { albums },
+    props: {
+      current: current.albums,
+      liked: liked.albums,
+      disliked: disliked.albums,
+    },
   };
 }
