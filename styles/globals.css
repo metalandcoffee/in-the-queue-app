@@ -1,14 +1,30 @@
+:root {
+  --purple: #16111c;
+  --white: #fff;
+}
+
+html {
+  font-size: 100%;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--purple);
+  color: var(--white);
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+svg {
+  width: 2rem;
+  height: 2rem;
 }
 
 * {
