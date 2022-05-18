@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import List from '../components/List'
 import styles from '../styles/Home.module.css'
+import banner from '../public/banner.jpeg'
 
 export default function Home({current, liked, disliked}) {
 
@@ -13,6 +14,13 @@ export default function Home({current, liked, disliked}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
+        <Image
+          src={banner}
+          alt='Picture of a vinyl player'
+          height={250}
+          objectFit='cover'
+          objectPosition='0 81%'
+        />
         <h1>In The Queue</h1>
       </header>
       <main className={styles.main}>

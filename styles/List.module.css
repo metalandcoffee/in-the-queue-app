@@ -8,11 +8,16 @@
 	margin: 0;
 }
 
+.head,
 .item {
 	display: grid;
 	grid-auto-rows: 100px;
-	grid-template-columns: 100px repeat(3, 250px);
+	grid-template-columns: 100px repeat(4, 250px);
 	align-items: center;
+}
+
+.head {
+	text-transform: uppercase;
 }
 
 .item::before {

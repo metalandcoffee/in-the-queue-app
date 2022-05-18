@@ -9,9 +9,17 @@ export default function List({heading, albums}) {
 		<div className={styles.container}>
 			<h2>{ heading }</h2>
 			<ul className={styles.grid}>
+				<li className={styles.head}>
+					<p></p>
+					<p>Artwork</p>
+					<p>Artist</p>
+					<p>Album</p>
+					<p></p>
+				</li>
 				{albums.map((album, index) => {
 					return (
 						<li className={styles.item} key={index}>
+							<p>Artwork</p>
 							<h2>{album.name}</h2>
 							<p>{album.album}</p>
 							<p>
