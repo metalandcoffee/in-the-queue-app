@@ -11,7 +11,6 @@
 .head,
 .item {
 	display: grid;
-	grid-auto-rows: 100px;
 	grid-template-columns: 100px repeat(4, 250px);
 	align-items: center;
 }

@@ -1,3 +1,6 @@
+import Image from 'next/image'
+
+import placeholder from '../public/placeholder.png'
 import styles from '../styles/List.module.css'
 import LikedIcon from './icons/Liked'
 import DislikedIcon from './icons/Disliked'
@@ -19,7 +22,19 @@ export default function List({heading, albums}) {
 				{albums.map((album, index) => {
 					return (
 						<li className={styles.item} key={index}>
-							<p>Artwork</p>
+							<div className="img-container">
+							<Image
+								width={150}
+								height={150}
+								src={
+									album.image && '' !== album.image ?
+									album.image :
+									placeholder
+								}
+								alt=''
+							/>
+							</div>
+							
 							<h2>{album.name}</h2>
 							<p>{album.album}</p>
 							<p>
