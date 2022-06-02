@@ -24,3 +24,7 @@
 	content: counter(album);
 	justify-self: center;
 }
+
+.item:hover {
+	background-color: #1f1827;
+}

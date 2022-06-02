@@ -60,14 +60,18 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
-        <Image
-          src={banner}
-          alt='Picture of a vinyl player'
-          height={250}
-          objectFit='cover'
-          objectPosition='0 81%'
-        />
-        <h1 className="container">In The Queue</h1>
+        <div className={styles.imageContainer}>
+          <Image
+            src={banner}
+            alt="Picture of a vinyl player"
+            height={250}
+            style={{ borderRadius: 5 }}
+            objectFit='cover'
+            objectPosition='0 81%'
+          />
+          <h1 className="container">In The Queue</h1>
+        </div>
+
       </header>
       <main className={styles.main}>
       { notif && (
@@ -84,8 +88,11 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
             <button type="submit" onClick={handleSubmit}>Submit</button>
           </form>
         </div>
+        <hr className="container" />
         <List heading="Listening to..." albums={current} />
+        <hr className="container" />
         <List heading="Liked Music" albums={liked} />
+        <hr className="container" />
         <List heading="Disliked Music" albums={disliked} />
       </main>
 
