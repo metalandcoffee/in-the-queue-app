@@ -3,6 +3,10 @@
   --white: #fff;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 100%;
 }
@@ -34,6 +38,6 @@ svg {
   height: 2rem;
 }
 
-* {
-  box-sizing: border-box;
+.container {
+	padding: 0 100px;
 }
