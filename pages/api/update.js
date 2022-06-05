@@ -4,8 +4,8 @@ import clientPromise from '../../lib/mongodb';
 
 export default async function handler(req, res) {
   // If artist name or album name is falsy...
-  if (!req.body.name || !req.body.album) {
-    return res.status(400).json({ message: 'Must contain artist name and album name.' });
+  if (!req.body.id || !req.body.status) {
+    return res.status(400).json({ message: 'Application error. Please contact administrator.' });
   }
 
   const client = await clientPromise;
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   try {
     await db.collection('albums').updateOne(
-      { _id: mongo.ObjectId(req.body['album-id']) },
+      { _id: mongo.ObjectId(req.body.id) },
       { $set: { status: req.body.status } },
     );
     return res.status(200).json();

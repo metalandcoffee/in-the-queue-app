@@ -1,3 +1,9 @@
+.button {
+	color: inherit;
+	background: none;
+	border: none;
+}
+
 .container {
 	counter-reset: album;
 }
@@ -27,4 +33,9 @@
 
 .item:hover {
 	background-color: #1f1827;
+}
+
+.modify {
+	display: flex;
+	justify-content: space-evenly;
 }

@@ -89,11 +89,32 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
           </form>
         </div>
         <hr className="container" />
-        <List heading="Listening to..." albums={current} />
+        <List
+          heading="Listening to..."
+          albums={current}
+          type="current"
+          setCurrent={ setCurrent }
+          setLiked={ setLiked }
+          setDisliked={ setDisliked }
+        />
         <hr className="container" />
-        <List heading="Liked Music" albums={liked} />
+        <List
+          heading="Liked Music"
+          albums={liked}
+          type="liked"
+          setCurrent={ setCurrent }
+          setLiked={ setLiked }
+          setDisliked={ setDisliked }
+        />
         <hr className="container" />
-        <List heading="Disliked Music" albums={disliked} />
+        <List
+          heading="Disliked Music"
+          albums={disliked}
+          type="disliked"
+          setCurrent={ setCurrent }
+          setLiked={ setLiked }
+          setDisliked={ setDisliked }
+        />
       </main>
 
       <footer className={styles.footer}>
