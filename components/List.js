@@ -8,12 +8,13 @@ import UpdateIcon from './icons/Update';
 import DeleteIcon from './icons/Delete';
 
 export default function List({
-  heading, albums, type, setCurrent, setLiked, setDisliked
+  heading, albums, type, listening, liked, disliked, setListening, setLiked, setDisliked,
 }) {
-  async function updateStatus(id, status, arrIndex) {
+  async function updateStatus(
+    id, status, arrIndex,
+  ) {
     // update album status in database.
-    const response = await fetch(
-      '/api/update/',
+    const response = await fetch('/api/update/',
       {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -21,25 +22,37 @@ export default function List({
           id,
           status,
         }),
-      },
-    );
+      });
 
     // If database update is successful...
-    // Remove the album from the current list that it's in...
-    // Add it to the new list based on its new status...
     if (response.ok) {
-      if (type === 'current') {
-        // Get record of album to be moved.
-        const album = albums.filter((album, i) => i === arrIndex);
+      // Get array containing recently updated album.
+      const albumArr = albums.filter((album, i) => i === arrIndex);
 
-        // Remove album from 'current' list and update state variable.
-        const newCurrent = albums.filter((album, i) => i !== arrIndex);
-        setCurrent(newCurrent);
-        // Add album to new list.
-        if ( 'liked' === status ) {
-          setLiked()
-        }
+      // Remove album from its current list.
+      const newList = albums.filter((album, i) => i !== arrIndex);
+
+      // Depending on list type, update state variable with new list.
+      if (type === 'listening') {
+        setListening(newList);
+      } else if (type === 'liked') {
+        setLiked(newList);
+      } else if (type === 'disliked') {
+        setDisliked(newList);
       }
+
+      // Add album to new list.
+      if (status === 'liked') {
+        setLiked([ ...liked,
+          ...albumArr ]);
+      } else if (status === 'disliked') {
+        setDisliked([ ...disliked,
+          ...albumArr ]);
+      }
+
+      // @todo - when clicking the Liked or Disliked button for an album that is already in that column, return album to 'Listening To...'
+      // @todo add sass
+      // @todo active colors on thumbs up button when in liked or disliked column
     }
   }
 
