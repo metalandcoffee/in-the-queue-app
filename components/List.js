@@ -51,7 +51,7 @@ export default function List({
       }
 
       // @todo - when clicking the Liked or Disliked button for an album that is already in that column, return album to 'Listening To...'
-      // @todo add sass
+      // @todo Add auth before making database updates
       // @todo active colors on thumbs up button when in liked or disliked column
     }
   }

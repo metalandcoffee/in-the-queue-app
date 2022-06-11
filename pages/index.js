@@ -90,6 +90,7 @@ export default function Home({
         </div>
         <hr className="container" />
         <List
+          className={styles.listening}
           heading="Listening to..."
           albums={listening}
           type="listening"
@@ -102,6 +103,7 @@ export default function Home({
         />
         <hr className="container" />
         <List
+          className={styles.liked}
           heading="Liked Music"
           albums={liked}
           type="liked"
@@ -114,6 +116,7 @@ export default function Home({
         />
         <hr className="container" />
         <List
+          className={styles.disliked}
           heading="Disliked Music"
           albums={disliked}
           type="disliked"
