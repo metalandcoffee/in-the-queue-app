@@ -8,7 +8,7 @@ import UpdateIcon from './icons/Update';
 import DeleteIcon from './icons/Delete';
 
 export default function List({
-  heading, albums, type, listening, liked, disliked, setListening, setLiked, setDisliked,
+  heading, albums, type, liked, disliked, setListening, setLiked, setDisliked,
 }) {
   async function updateStatus(
     id, status, arrIndex,
@@ -49,10 +49,6 @@ export default function List({
         setDisliked([ ...disliked,
           ...albumArr ]);
       }
-
-      // @todo - when clicking the Liked or Disliked button for an album that is already in that column, return album to 'Listening To...'
-      // @todo Add auth before making database updates
-      // @todo active colors on thumbs up button when in liked or disliked column
     }
   }
 

@@ -8,6 +8,7 @@
     "array-bracket-spacing": ["error", "always"],
     "function-call-argument-newline": ["error", "always"],
     "function-paren-newline": ["error", { "minItems": 3 }],
-    "object-curly-newline": ["error", { "minProperties": 2 }]
+    "object-curly-newline": ["error", { "minProperties": 2 }],
+    "no-underscore-dangle": "off"
   }
 }

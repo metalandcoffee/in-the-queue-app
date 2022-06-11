@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
-import { server } from '../lib/config';
+import server from '../lib/config';
 import List from '../components/List';
 import styles from '../styles/Home.module.css';
 import banner from '../public/banner.jpeg';
