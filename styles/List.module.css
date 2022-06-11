@@ -1,0 +1,41 @@
+.button {
+	color: inherit;
+	background: none;
+	border: none;
+}
+
+.container {
+	counter-reset: album;
+}
+
+.grid {
+	display: grid;
+	padding: 0;
+	margin: 0;
+}
+
+.head,
+.item {
+	display: grid;
+	grid-template-columns: 100px repeat(4, 250px);
+	align-items: center;
+}
+
+.head {
+	text-transform: uppercase;
+}
+
+.item::before {
+	counter-increment: album;
+	content: counter(album);
+	justify-self: center;
+}
+
+.item:hover {
+	background-color: #1f1827;
+}
+
+.modify {
+	display: flex;
+	justify-content: space-evenly;
+}
