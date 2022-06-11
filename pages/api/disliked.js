@@ -6,11 +6,9 @@ export default async function handler(req, res) {
 
   const db = client.db('metal-albums');
 
-  let albums = await db.collection('albums').find(
-    {
-      status: 'disliked',
-      is_archive: { $exists: false },
-    },
-    ).toArray();
-  res.status(200).json({albums});
+  const albums = await db.collection('albums').find({
+    status: 'disliked',
+    is_archive: { $exists: false },
+  }).toArray();
+  res.status(200).json({ albums });
 }

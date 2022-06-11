@@ -12,10 +12,8 @@ export default async function handler(req, res) {
   const db = client.db('metal-albums');
 
   try {
-    await db.collection('albums').updateOne(
-      { _id: mongo.ObjectId(req.body.id) },
-      { $set: { status: req.body.status } },
-    );
+    await db.collection('albums').updateOne({ _id: mongo.ObjectId(req.body.id) },
+      { $set: { status: req.body.status } });
     return res.status(200).json();
   } catch (e) {
     return res.status(500).json({ message: 'Database error. Try again later.' });

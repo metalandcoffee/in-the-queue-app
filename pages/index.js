@@ -9,22 +9,23 @@ import banner from '../public/banner.jpeg';
 /**
  * Home Page.
  */
-export default function Home({ currentJson, likedJson, dislikedJson }) {
+export default function Home({
+  currentJson, likedJson, dislikedJson,
+}) {
   // Set state.
-  const [artist, setArtist] = useState('');
-  const [album, setAlbum] = useState('');
-  const [error, setError] = useState(false);
-  const [notif, setNotif] = useState(false);
-  const [current, setCurrent] = useState(currentJson);
-  const [liked, setLiked] = useState(likedJson);
-  const [disliked, setDisliked] = useState(dislikedJson);
+  const [ artist, setArtist ] = useState('');
+  const [ album, setAlbum ] = useState('');
+  const [ error, setError ] = useState(false);
+  const [ notif, setNotif ] = useState(false);
+  const [ current, setCurrent ] = useState(currentJson);
+  const [ liked, setLiked ] = useState(likedJson);
+  const [ disliked, setDisliked ] = useState(dislikedJson);
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     // Add new album to database.
-    const response = await fetch(
-      '/api/add/',
+    const response = await fetch('/api/add/',
       {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -32,13 +33,12 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
           name: artist,
           album,
         }),
-      },
-    );
+      });
 
     // If database update is successful...
     if (response.ok) {
       const newAdd = await response.json();
-      setCurrent([...current, newAdd]);
+      setCurrent([ ...current, newAdd ]);
 
       // Set notification.
       setNotif('Album successfully added.');
@@ -62,15 +62,15 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
       <header>
         <div className={styles.imageContainer}>
           <Image
-            src={banner}
+            src={ banner }
             alt="Picture of a vinyl player"
             height={250}
             style={{ borderRadius: 5 }}
             objectFit='cover'
             objectPosition='0 81%'
           />
-          <h1 className="container">In The Queue</h1>
-        </div>
+         <h1 className="container">In The Queue</h1>
+      </div>
 
       </header>
       <main className={styles.main}>
@@ -83,9 +83,9 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
         <div className="container">
           <h2>Add Album</h2>
           <form>
-            <input type="text" value={artist} onChange={(e) => setArtist(e.target.value)}/>
-            <input type="text" value={album} onChange={(e) => setAlbum(e.target.value)}/>
-            <button type="submit" onClick={handleSubmit}>Submit</button>
+            <input className={styles.input} type="text" value={artist} placeholder="Enter name..." onChange={(e) => setArtist(e.target.value)}/>
+            <input className={styles.input} type="text" value={album} placeholder="Enter album..." onChange={(e) => setAlbum(e.target.value)}/>
+            <button className={styles.button} type="submit" onClick={handleSubmit}>Submit</button>
           </form>
         </div>
         <hr className="container" />
@@ -93,6 +93,9 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
           heading="Listening to..."
           albums={current}
           type="current"
+          current={current}
+          liked={liked}
+          disliked={disliked}
           setCurrent={ setCurrent }
           setLiked={ setLiked }
           setDisliked={ setDisliked }
@@ -102,6 +105,9 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
           heading="Liked Music"
           albums={liked}
           type="liked"
+          current={current}
+          liked={liked}
+          disliked={disliked}
           setCurrent={ setCurrent }
           setLiked={ setLiked }
           setDisliked={ setDisliked }
@@ -111,6 +117,9 @@ export default function Home({ currentJson, likedJson, dislikedJson }) {
           heading="Disliked Music"
           albums={disliked}
           type="disliked"
+          current={current}
+          liked={liked}
+          disliked={disliked}
           setCurrent={ setCurrent }
           setLiked={ setLiked }
           setDisliked={ setDisliked }
@@ -143,11 +152,9 @@ export async function getServerSideProps() {
   const dislikedRes = await fetch(`${server}/api/disliked`);
   const dislikedJson = await dislikedRes.json();
 
-  return {
-    props: {
-      currentJson: currentJson.albums,
-      likedJson: likedJson.albums,
-      dislikedJson: dislikedJson.albums,
-    },
-  };
+  return { props: {
+    currentJson: currentJson.albums,
+    likedJson: likedJson.albums,
+    dislikedJson: dislikedJson.albums,
+  } };
 }
