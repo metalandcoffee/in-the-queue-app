@@ -61,7 +61,7 @@ export default function Home() {
 
     // If database update is successful...
     if (response.ok) {
-      const newAdd = await response.json();
+      await onChange();
 
       // Set notification.
       setNotif("Album successfully added.");
@@ -128,7 +128,7 @@ export default function Home() {
         <List
           className={styles.listening}
           heading="Listening to..."
-          albums={albums.filter(x => !['liked', 'disliked'].includes(x.status))}
+          albums={albums.filter(x => x.status === 'none')}
           onChange={onChange}
         />
         <hr className="container" />
