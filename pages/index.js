@@ -10,14 +10,14 @@ import banner from '../public/banner.jpeg';
  * Home Page.
  */
 export default function Home({
-  currentJson, likedJson, dislikedJson,
+  listeningJson, likedJson, dislikedJson,
 }) {
   // Set state.
   const [ artist, setArtist ] = useState('');
   const [ album, setAlbum ] = useState('');
   const [ error, setError ] = useState(false);
   const [ notif, setNotif ] = useState(false);
-  const [ current, setCurrent ] = useState(currentJson);
+  const [ listening, setListening ] = useState(listeningJson);
   const [ liked, setLiked ] = useState(likedJson);
   const [ disliked, setDisliked ] = useState(dislikedJson);
 
@@ -38,7 +38,7 @@ export default function Home({
     // If database update is successful...
     if (response.ok) {
       const newAdd = await response.json();
-      setCurrent([ ...current, newAdd ]);
+      setListening([ ...listening, newAdd ]);
 
       // Set notification.
       setNotif('Album successfully added.');
@@ -91,12 +91,12 @@ export default function Home({
         <hr className="container" />
         <List
           heading="Listening to..."
-          albums={current}
-          type="current"
-          current={current}
+          albums={listening}
+          type="listening"
+          listening={listening}
           liked={liked}
           disliked={disliked}
-          setCurrent={ setCurrent }
+          setListening={ setListening }
           setLiked={ setLiked }
           setDisliked={ setDisliked }
         />
@@ -105,10 +105,10 @@ export default function Home({
           heading="Liked Music"
           albums={liked}
           type="liked"
-          current={current}
+          listening={listening}
           liked={liked}
           disliked={disliked}
-          setCurrent={ setCurrent }
+          setListening={ setListening }
           setLiked={ setLiked }
           setDisliked={ setDisliked }
         />
@@ -117,10 +117,10 @@ export default function Home({
           heading="Disliked Music"
           albums={disliked}
           type="disliked"
-          current={current}
+          listening={listening}
           liked={liked}
           disliked={disliked}
-          setCurrent={ setCurrent }
+          setListening={ setListening }
           setLiked={ setLiked }
           setDisliked={ setDisliked }
         />
@@ -143,8 +143,8 @@ export default function Home({
 }
 
 export async function getServerSideProps() {
-  const currentRes = await fetch(`${server}/api/current`);
-  const currentJson = await currentRes.json();
+  const listeningRes = await fetch(`${server}/api/listening`);
+  const listeningJson = await listeningRes.json();
 
   const likedRes = await fetch(`${server}/api/liked`);
   const likedJson = await likedRes.json();
@@ -153,7 +153,7 @@ export async function getServerSideProps() {
   const dislikedJson = await dislikedRes.json();
 
   return { props: {
-    currentJson: currentJson.albums,
+    listeningJson: listeningJson.albums,
     likedJson: likedJson.albums,
     dislikedJson: dislikedJson.albums,
   } };
