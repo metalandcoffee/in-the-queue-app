@@ -1,7 +1,9 @@
+import {
+  useEffect, useState,
+} from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
-import server from '../lib/config';
+import { server } from '../lib/config';
 import List from '../components/List';
 import styles from '../styles/Home.module.css';
 import banner from '../public/banner.jpeg';
@@ -9,17 +11,42 @@ import banner from '../public/banner.jpeg';
 /**
  * Home Page.
  */
-export default function Home({
-  listeningJson, likedJson, dislikedJson,
-}) {
+export default function Home() {
   // Set state.
+  const [ albums, setAlbums ] = useState([]);
   const [ artist, setArtist ] = useState('');
   const [ album, setAlbum ] = useState('');
   const [ error, setError ] = useState(false);
   const [ notif, setNotif ] = useState(false);
-  const [ listening, setListening ] = useState(listeningJson);
-  const [ liked, setLiked ] = useState(likedJson);
-  const [ disliked, setDisliked ] = useState(dislikedJson);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(`${server}/api/albums`);
+        const obj = await res.json();
+        console.log(albums);
+
+        setAlbums(obj.albums);
+      } catch (e) {
+        console.log(e);
+        setAlbums(albums);
+      }
+    })();
+  },
+  []);
+
+  const onChange = async () => {
+    try {
+      const res = await fetch(`${server}/api/albums`);
+      const obj = await res.json();
+      console.log(albums);
+
+      setAlbums(obj.albums);
+    } catch (e) {
+      console.log(e);
+      setAlbums(albums);
+    }
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -37,8 +64,7 @@ export default function Home({
 
     // If database update is successful...
     if (response.ok) {
-      const newAdd = await response.json();
-      setListening([ ...listening, newAdd ]);
+      await onChange();
 
       // Set notification.
       setNotif('Album successfully added.');
@@ -62,70 +88,65 @@ export default function Home({
       <header>
         <div className={styles.imageContainer}>
           <Image
-            src={ banner }
+            src={banner}
             alt="Picture of a vinyl player"
             height={250}
             style={{ borderRadius: 5 }}
-            objectFit='cover'
-            objectPosition='0 81%'
+            objectFit="cover"
+            objectPosition="0 81%"
           />
-         <h1 className="container">In The Queue</h1>
-      </div>
-
+          <h1 className="container">In The Queue</h1>
+        </div>
       </header>
       <main className={styles.main}>
-      { notif && (
-        <div className="notification">{notif}</div>
-      )}
-      { error && (
-        <div className="error">{error}</div>
-      )}
+        {notif && <div className="notification">{notif}</div>}
+        {error && <div className="error">{error}</div>}
         <div className="container">
           <h2>Add Album</h2>
           <form>
-            <input className={styles.input} type="text" value={artist} placeholder="Enter name..." onChange={(e) => setArtist(e.target.value)}/>
-            <input className={styles.input} type="text" value={album} placeholder="Enter album..." onChange={(e) => setAlbum(e.target.value)}/>
-            <button className={styles.button} type="submit" onClick={handleSubmit}>Submit</button>
+            <input
+              className={styles.input}
+              type="text"
+              value={artist}
+              placeholder="Enter name..."
+              onChange={(e) => setArtist(e.target.value)}
+            />
+            <input
+              className={styles.input}
+              type="text"
+              value={album}
+              placeholder="Enter album..."
+              onChange={(e) => setAlbum(e.target.value)}
+            />
+            <button
+              className={styles.button}
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Submit
+            </button>
           </form>
         </div>
         <hr className="container" />
         <List
           className={styles.listening}
           heading="Listening to..."
-          albums={listening}
-          type="listening"
-          listening={listening}
-          liked={liked}
-          disliked={disliked}
-          setListening={ setListening }
-          setLiked={ setLiked }
-          setDisliked={ setDisliked }
+          albums={albums.filter((x) => x.status === 'none')}
+          onChange={onChange}
         />
         <hr className="container" />
         <List
           className={styles.liked}
           heading="Liked Music"
-          albums={liked}
-          type="liked"
-          listening={listening}
-          liked={liked}
-          disliked={disliked}
-          setListening={ setListening }
-          setLiked={ setLiked }
-          setDisliked={ setDisliked }
+          albums={albums.filter((x) => x.status === 'liked')}
+          onChange={onChange}
         />
         <hr className="container" />
         <List
           className={styles.disliked}
           heading="Disliked Music"
-          albums={disliked}
-          type="disliked"
-          listening={listening}
-          liked={liked}
-          disliked={disliked}
-          setListening={ setListening }
-          setLiked={ setLiked }
-          setDisliked={ setDisliked }
+          albums={albums.filter((x) => x.status === 'disliked')}
+          onChange={onChange}
         />
       </main>
 
@@ -146,18 +167,5 @@ export default function Home({
 }
 
 export async function getServerSideProps() {
-  const listeningRes = await fetch(`${server}/api/listening`);
-  const listeningJson = await listeningRes.json();
-
-  const likedRes = await fetch(`${server}/api/liked`);
-  const likedJson = await likedRes.json();
-
-  const dislikedRes = await fetch(`${server}/api/disliked`);
-  const dislikedJson = await dislikedRes.json();
-
-  return { props: {
-    listeningJson: listeningJson.albums,
-    likedJson: likedJson.albums,
-    dislikedJson: dislikedJson.albums,
-  } };
+  return { props: {} };
 }
