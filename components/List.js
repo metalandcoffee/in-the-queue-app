@@ -1,7 +1,9 @@
-import styles from "../styles/List.module.css";
-import Album from "./Album";
+import styles from '../styles/List.module.css';
+import Album from './Album';
 
-export default function List({ heading, albums, onChange }) {
+export default function List({
+  heading, albums, onChange,
+}) {
   return (
     <div className={styles.container}>
       <h2 className="container">{heading}</h2>

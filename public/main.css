@@ -1,0 +1,144 @@
+/* Global */
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--grey: #b3b3b3;
+	--white: #fff;
+	--black: #000;
+	--red: #853746;
+	--green: #8fca91;
+	--red: #d97171;
+	--purple: #9090c7;
+	--lt-purple: #aeaef8;
+}
+
+html {
+	font-size: 100%;
+}
+
+img {
+	height: 100%;
+	width: auto;
+}
+
+/* Typography */
+body {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 300;
+	font-style: normal;
+	color: var(--black);
+	margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: 900;
+	margin-top: 0;
+	margin-bottom: 1rem;
+}
+
+h1 {
+	font-size: 4rem;
+	text-align: center;
+}
+
+h2 {
+	font-size: 2.5rem;
+}
+
+h3 {
+	font-size: 2rem;
+}
+
+h4 {
+	font-size: 1.5rem;
+}
+
+svg {
+	width: 2rem;
+	height: 2rem;
+}
+
+/* Layout */
+.container {
+	margin: 0 6rem;
+}
+
+/* Utilities */
+.hidden {
+	display: none !important;
+}
+
+/* Album List */
+.album-list {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 150px;
+	margin: 0;
+	margin-bottom: 2rem;
+	padding: 0;
+}
+
+.album-heading {
+	color: var(--white);
+	background-color: #673ab7;
+	font-weight: 700;
+	letter-spacing: 0.75px;font-size: 1.3rem;
+}
+.album-list-item {
+	justify-items: center;
+	align-items: center;
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+grid-auto-rows: 150px;}
+
+.album-list-item .img-container {
+	align-self: stretch;
+}
+
+.album-list-item .img-container img {
+	/* height: 100%; */
+	/* width: 100%; */
+	/* object-fit: cover; */
+}
+
+.album-list-item .is-set[data-status="liked"] {
+	color: #51954e;
+}
+
+.album-list-item .is-set[data-status="disliked"] {
+	color: #d85959;
+}
+
+.album-details {
+	display: flex;
+	flex-direction: column;
+}
+
+.album-details .name {
+	font-size: 1.5rem;
+	font-weight: 900;
+}
+
+.list-heading {
+	border-top: 6px solid black;
+	border-bottom: 3px solid black;
+	padding: 2rem 0;
+}
+
+.list-heading h3 {
+	margin: 0;
+}
+
+.toggle-visibility button {
+	padding: 0;
+	background-color: transparent;
+	border-style: none;
+}

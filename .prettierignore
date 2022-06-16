@@ -1,0 +1,2 @@
+# Ignore Github workflow config file:
+.github/workflows/main.yml

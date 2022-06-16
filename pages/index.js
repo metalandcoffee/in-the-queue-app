@@ -1,22 +1,23 @@
-import { useEffect } from 'react';
-import Head from "next/head";
-import Image from "next/image";
-import { server } from "../lib/config"
-import { useState } from "react";
-import List from "../components/List";
-import styles from "../styles/Home.module.css";
-import banner from "../public/banner.jpeg";
+import {
+  useEffect, useState,
+} from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import { server } from '../lib/config';
+import List from '../components/List';
+import styles from '../styles/Home.module.css';
+import banner from '../public/banner.jpeg';
 
 /**
  * Home Page.
  */
 export default function Home() {
   // Set state.
-  const [albums, setAlbums] = useState([]);
-  const [artist, setArtist] = useState("");
-  const [album, setAlbum] = useState("");
-  const [error, setError] = useState(false);
-  const [notif, setNotif] = useState(false);
+  const [ albums, setAlbums ] = useState([]);
+  const [ artist, setArtist ] = useState('');
+  const [ album, setAlbum ] = useState('');
+  const [ error, setError ] = useState(false);
+  const [ notif, setNotif ] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -30,8 +31,9 @@ export default function Home() {
         console.log(e);
         setAlbums(albums);
       }
-    })()
-  }, [])
+    })();
+  },
+  []);
 
   const onChange = async () => {
     try {
@@ -44,31 +46,32 @@ export default function Home() {
       console.log(e);
       setAlbums(albums);
     }
-  }
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
 
     // Add new album to database.
-    const response = await fetch("/api/add/", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: artist,
-        album,
-      }),
-    });
+    const response = await fetch('/api/add/',
+      {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: artist,
+          album,
+        }),
+      });
 
     // If database update is successful...
     if (response.ok) {
       await onChange();
 
       // Set notification.
-      setNotif("Album successfully added.");
+      setNotif('Album successfully added.');
 
       // Clear form fields.
-      setArtist("");
-      setAlbum("");
+      setArtist('');
+      setAlbum('');
     } else {
       const resJson = await response.json();
       setError(resJson.message);
@@ -128,21 +131,21 @@ export default function Home() {
         <List
           className={styles.listening}
           heading="Listening to..."
-          albums={albums.filter(x => x.status === 'none')}
+          albums={albums.filter((x) => x.status === 'none')}
           onChange={onChange}
         />
         <hr className="container" />
         <List
           className={styles.liked}
           heading="Liked Music"
-          albums={albums.filter(x => x.status === 'liked')}
+          albums={albums.filter((x) => x.status === 'liked')}
           onChange={onChange}
         />
         <hr className="container" />
         <List
           className={styles.disliked}
           heading="Disliked Music"
-          albums={albums.filter(x => x.status === 'disliked')}
+          albums={albums.filter((x) => x.status === 'disliked')}
           onChange={onChange}
         />
       </main>
@@ -153,7 +156,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
+          Powered by{' '}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
@@ -164,7 +167,5 @@ export default function Home() {
 }
 
 export async function getServerSideProps() {
-  return {
-    props: {},
-  };
+  return { props: {} };
 }

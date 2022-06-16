@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include( 'partials/metadata.ejs' ) %>
+	<body>
+		<main class="bg-color-pink">
+			<%- include( 'partials/title.ejs' ) %>
+			<div class="bg-color-transparent padding-1">
+				<div class="container">
+					<h3>Add An Album</h3>
+					<form class="grid-row add-album">
+						<input
+							type="text"
+							placeholder="Name of Artist/Band"
+							name="name"
+						/>
+						<input
+							type="text"
+							placeholder="Name of Album"
+							name="album"
+						/>
+						<button id="js-add-album" type="submit">
+							<%- include('icons/plus.svg'); %>
+						</button>
+						<p class="alert"></p>
+					</form>
+					<div id="current">
+						<div class="list-heading">
+							<h3>Current Album List</h3>
+						</div>
+						<%- include( 'partials/list.ejs', { albums, isLiked:
+						false, isDisliked: false, readOnly: false } ) %>
+					</div>
+					<div id="liked">
+						<div class="list-heading">
+							<h3>Liked</h3>
+						</div>
+						<%- include( 'partials/list.ejs', { albums: liked,
+						isLiked: true, isDisliked: false, readOnly: false } ) %>
+					</div>
+					<div id="disliked">
+						<div class="list-heading">
+							<h3>Disliked</h3>
+						</div>
+						<%- include( 'partials/list.ejs', { albums: disliked,
+						isLiked: false, isDisliked: true, readOnly: false } ) %>
+					</div>
+					<div id="archive">
+						<div class="list-heading">
+							<h3>Archived</h3>
+						</div>
+						<ul>
+							<% for (var prop in archiveDates) { %>
+							<li>
+								<a
+									href="archive?date=<%= prop %>"
+									data-id="<%= prop %>"
+									><%= archiveDates[prop] %></a
+								>
+							</li>
+							<% } %>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="transparent-overlay"></div>
+		</main>
+		<footer>
+			<button id="archive-button" class="pull-to-front">
+				Archive & Clear
+			</button>
+			<form class="pull-to-front" action="logout" method="POST">
+				<button type="submit">Logout</button>
+			</form>
+		</footer>
+		<%- include( 'partials/scripts.ejs' ) %>
+	</body>
+</html>

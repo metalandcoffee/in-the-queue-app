@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include( 'partials/metadata.ejs' ) %>
+	<body class="archive">
+		<main class="bg-color-purple">
+			<%- include( 'partials/title.ejs' ) %>
+			<div class="bg-color-transparent padding-1">
+				<div class="container pull-to-front">
+					<h3><%= archiveDate %></h3>
+					<div id="current">
+						<div class="list-heading">
+							<h4>Current Album List</h4>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hidden">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+
+						<ul>
+							<li class="album album-heading grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										>Artist/Band</span
+									>
+									<span class="album-name">Album Name</span>
+								</div>
+							</li>
+							<% for(var i = 0; i < albums.length; i++) {%>
+							<li class="album grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										><%= albums[i].name %></span
+									>
+									<span class="album-name"
+										><%= albums[i].album %></span
+									>
+								</div>
+							</li>
+							<% } %>
+						</ul>
+					</div>
+					<div id="liked">
+						<div class="list-heading">
+							<h4>Liked</h4>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hidden">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+						<ul>
+							<li class="album album-heading grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										>Artist/Band</span
+									>
+									<span class="album-name">Album Name</span>
+								</div>
+							</li>
+							<% for(var i = 0; i < liked.length; i++) {%>
+							<li class="album grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										><%= liked[i].name %></span
+									>
+									<span class="album-name"
+										><%= liked[i].album %></span
+									>
+								</div>
+							</li>
+							<% } %>
+						</ul>
+					</div>
+					<div id="disliked">
+						<div class="list-heading">
+							<h4>Disliked</h4>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hidden">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+						<ul>
+							<li class="album album-heading grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										>Artist/Band</span
+									>
+									<span class="album-name">Album Name</span>
+								</div>
+							</li>
+							<% for(var i = 0; i < disliked.length; i++) {%>
+							<li class="album grid-row">
+								<div class="read-album">
+									<span class="album-artist"
+										><%= disliked[i].name %></span
+									>
+									<span class="album-name"
+										><%= disliked[i].album %></span
+									>
+								</div>
+							</li>
+							<% } %>
+						</ul>
+					</div>
+					<div id="archive">
+						<div class="list-heading">
+							<h4>Archived</h4>
+							<button class="show-button">
+								<%- include('icons/eye-solid.svg'); %>
+							</button>
+							<button class="hide-button hidden">
+								<%- include('icons/eye-slash-solid.svg'); %>
+							</button>
+						</div>
+						<ul>
+							<% for (var prop in archiveDates) { %>
+							<li>
+								<% if ( currentArchiveDate !== prop ) { %>
+								<a
+									href="archive?date=<%= prop %>"
+									data-id="<%= prop %>"
+									><%= archiveDates[prop] %></a
+								>
+								<% } else { %>
+								<span><%= archiveDates[prop] %></span>
+								<% } %>
+							</li>
+							<% } %>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="transparent-overlay"></div>
+		</main>
+		<footer>
+			<a href="/" class="pull-to-front">Return to Current List</a>
+			<form class="pull-to-front" action="logout" method="POST">
+				<button type="submit">Logout</button>
+			</form>
+		</footer>
+		<%- include( 'partials/scripts.ejs' ) %>
+	</body>
+</html>

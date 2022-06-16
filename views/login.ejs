@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include( 'partials/metadata.ejs' ) %>
+	<body>
+		<h1>Login</h1>
+		<% if (messages.error) { %>
+			<h2 class='error-message'><%= messages.error %></h2>
+		<% } %> <% if (
+		undefined !== referer && referer.includes('register') ) { %>
+		<h2>You have registered successfully. 🤘🏾</h2>
+		<% } %>
+		<form action="/login" method="POST">
+			<label
+				>Email:
+				<input name="email" autocomplete="email" required />
+			</label>
+			<label
+				>Password:
+				<input name="password" type="password" required />
+			</label>
+			<button type="submit">Login</button>
+		</form>
+		<a href="/register">Register</a>
+		<%- include( 'partials/scripts.ejs' ) %>
+	</body>
+</html>
