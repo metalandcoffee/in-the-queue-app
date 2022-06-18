@@ -19,34 +19,23 @@ export default function Home() {
   const [ error, setError ] = useState(false);
   const [ notif, setNotif ] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(`${server}/api/albums`);
-        const obj = await res.json();
-        console.log(albums);
-
-        setAlbums(obj.albums);
-      } catch (e) {
-        console.log(e);
-        setAlbums(albums);
-      }
-    })();
-  },
-  []);
-
-  const onChange = async () => {
+  const onAlbumUpdate = async () => {
     try {
       const res = await fetch(`${server}/api/albums`);
       const obj = await res.json();
-      console.log(albums);
 
       setAlbums(obj.albums);
     } catch (e) {
       console.log(e);
-      setAlbums(albums);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      onAlbumUpdate();
+    })();
+  },
+  []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -64,7 +53,7 @@ export default function Home() {
 
     // If database update is successful...
     if (response.ok) {
-      await onChange();
+      await onAlbumUpdate();
 
       // Set notification.
       setNotif('Album successfully added.');
@@ -132,21 +121,21 @@ export default function Home() {
           className={styles.listening}
           heading="Listening to..."
           albums={albums.filter((x) => x.status === 'none')}
-          onChange={onChange}
+          onAlbumUpdate={onAlbumUpdate}
         />
         <hr className="container" />
         <List
           className={styles.liked}
           heading="Liked Music"
           albums={albums.filter((x) => x.status === 'liked')}
-          onChange={onChange}
+          onAlbumUpdate={onAlbumUpdate}
         />
         <hr className="container" />
         <List
           className={styles.disliked}
           heading="Disliked Music"
           albums={albums.filter((x) => x.status === 'disliked')}
-          onChange={onChange}
+          onAlbumUpdate={onAlbumUpdate}
         />
       </main>
 

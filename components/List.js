@@ -2,7 +2,7 @@ import styles from '../styles/List.module.css';
 import Album from './Album';
 
 export default function List({
-  heading, albums, onChange,
+  heading, albums, onAlbumUpdate,
 }) {
   return (
     <div className={styles.container}>
@@ -16,7 +16,7 @@ export default function List({
           <p></p>
         </li>
         {albums.map((album, index) => (
-          <Album key={index} album={album} onChange={onChange} />
+          <Album key={index} album={album} onAlbumUpdate={onAlbumUpdate} />
         ))}
       </ul>
     </div>
