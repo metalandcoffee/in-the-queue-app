@@ -3,7 +3,6 @@ import Image from 'next/image';
 import placeholder from '../public/placeholder.png';
 import LikedIcon from './icons/Liked';
 import DislikedIcon from './icons/Disliked';
-import UpdateIcon from './icons/Update';
 import DeleteIcon from './icons/Delete';
 import styles from '../styles/List.module.css';
 
