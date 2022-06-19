@@ -25,7 +25,7 @@ export default function Home() {
   const [ album, setAlbum ] = useState('');
   const [ error, setError ] = useState(false);
   const [ notif, setNotif ] = useState(false);
-  const [ isMounted, setIsMounted ] = useState(false);
+  const [ isMounted, setIsMounted ] = useState(true);
 
   const onAlbumUpdate = async () => {
     try {
@@ -39,29 +39,24 @@ export default function Home() {
   };
 
   useEffect(() => {
-    debugger;
     (async () => {
       onAlbumUpdate();
     })();
   },
   []);
 
-  useEffect(() => { debugger; setIsMounted(true); },
-    []);
-
   // Check user authentication.
   useEffect(() => {
-    debugger;
     // Check if user is logged in...
     if (!isMounted) {
       return;
     }
 
-    if (!user) {
+    if (!user && !isLoading) {
       router.push('/api/auth/login');
     }
   },
-  [ isMounted, user, router ]);
+  [ isMounted, user, router, isLoading ]);
 
   async function handleSubmit(e) {
     e.preventDefault();
