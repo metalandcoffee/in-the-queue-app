@@ -1,6 +1,8 @@
 import {
   useEffect, useState,
 } from 'react';
+import { useUser } from '@auth0/nextjs-auth0';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
 import { server } from '../lib/config';
@@ -12,12 +14,18 @@ import banner from '../public/banner.jpeg';
  * Home Page.
  */
 export default function Home() {
+  const router = useRouter();
+  const {
+    user, isLoading,
+  } = useUser();
+
   // Set state.
   const [ albums, setAlbums ] = useState([]);
   const [ artist, setArtist ] = useState('');
   const [ album, setAlbum ] = useState('');
   const [ error, setError ] = useState(false);
   const [ notif, setNotif ] = useState(false);
+  const [ isMounted, setIsMounted ] = useState(false);
 
   const onAlbumUpdate = async () => {
     try {
@@ -31,11 +39,29 @@ export default function Home() {
   };
 
   useEffect(() => {
+    debugger;
     (async () => {
       onAlbumUpdate();
     })();
   },
   []);
+
+  useEffect(() => { debugger; setIsMounted(true); },
+    []);
+
+  // Check user authentication.
+  useEffect(() => {
+    debugger;
+    // Check if user is logged in...
+    if (!isMounted) {
+      return;
+    }
+
+    if (!user) {
+      router.push('/api/auth/login');
+    }
+  },
+  [ isMounted, user, router ]);
 
   async function handleSubmit(e) {
     e.preventDefault();
