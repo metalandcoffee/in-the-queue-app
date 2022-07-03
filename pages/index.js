@@ -63,9 +63,8 @@ export default function Home() {
     // If database update is successful...
     if (response.ok) {
       await onAlbumUpdate();
-
       // Set notification.
-      setNotif('Album successfully added.');
+      setNotif('Album added successfully!');
 
       // Clear form fields.
       setArtist('');
@@ -109,15 +108,8 @@ export default function Home() {
                 className={styles.input}
                 type="text"
                 value={artist}
-                placeholder="Enter name..."
+                placeholder="Enter album's name..."
                 onChange={(e) => setArtist(e.target.value)}
-              />
-              <input
-                className={styles.input}
-                type="text"
-                value={album}
-                placeholder="Enter album..."
-                onChange={(e) => setAlbum(e.target.value)}
               />
               <button
                 className={styles.button}

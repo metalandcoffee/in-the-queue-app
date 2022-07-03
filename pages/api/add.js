@@ -7,24 +7,24 @@ import clientPromise from '../../lib/mongodb';
 
 export default withApiAuthRequired(async (req, res) => {
   // If artist name or album name is falsy...
-  if (!req.body.name || !req.body.album) {
-    return res.status(400).json({ message: 'Must contain artist name and album name.' });
+  if (!req.body.name) {
+    return res.status(400).json({ message: 'Must provide album name.' });
   }
 
   const client = await clientPromise;
   const db = client.db('metal-albums');
 
-  // Fetch album artwork from Last.fm.
-  const response = await fetch(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=${encodeURIComponent(req.body.name)}&album=${encodeURIComponent(req.body.album)}&api_key=${process.env.LAST_FM_API_KEY}&format=json`);
+  // Fetch album artwork from Genius.
+  const response = await fetch(`https://api.genius.com/search?q=${encodeURIComponent(req.body.name)}&access_token=${process.env.GENIUS_API_KEY}`);
   const data = await response.json();
 
   // Is message property is present, no available album artwork.
-  const albumCover = data.message === undefined ? data.album.image[3]['#text'] : false;
+  const albumCover = data?.response?.hits[0]?.result?.header_image_thumbnail_url || false;
 
   // Add new album to database.
   const newAlbum = {
-    name: req.body.name,
-    album: req.body.album,
+    name: data?.response?.hits[0]?.result?.primary_artist?.name ?? req.body.name,
+    album: data?.response?.hits[0]?.result?.title ?? req.body.album,
     status: 'none',
     image: albumCover,
   };
