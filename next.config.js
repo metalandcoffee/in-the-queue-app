@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['lastfm.freetls.fastly.net'],
+    domains: ['images.genius.com'],
   },
 }
