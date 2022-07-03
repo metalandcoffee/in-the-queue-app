@@ -3,9 +3,10 @@
  * Update Endpoint.
  */
 import mongo from 'mongodb';
+import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import clientPromise from '../../lib/mongodb';
 
-export default async function handler(req, res) {
+export default withApiAuthRequired(async (req, res) => {
   // If artist name or album name is falsy...
   if (!req.body.id || !req.body.status) {
     return res.status(400).json({ message: 'Application error. Please contact administrator.' });
@@ -21,4 +22,4 @@ export default async function handler(req, res) {
   } catch (e) {
     return res.status(500).json({ message: 'Database error. Try again later.' });
   }
-}
+});

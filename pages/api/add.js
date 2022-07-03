@@ -2,9 +2,10 @@
 /**
  * Add Endpoint.
  */
+import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import clientPromise from '../../lib/mongodb';
 
-export default async function handler(req, res) {
+export default withApiAuthRequired(async (req, res) => {
   // If artist name or album name is falsy...
   if (!req.body.name || !req.body.album) {
     return res.status(400).json({ message: 'Must contain artist name and album name.' });
@@ -33,4 +34,4 @@ export default async function handler(req, res) {
   } catch (e) {
     return res.status(500).json({ message: 'Database error. Try again later.' });
   }
-}
+});
