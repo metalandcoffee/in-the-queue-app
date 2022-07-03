@@ -71,19 +71,24 @@ router.post('/logout', (req, res) => {
 
 // Album Add Endpoint.
 router.post('/add-album', checkDbAccess, async (req, res) => {
-  const response = await fetch(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=${encodeURIComponent(req.body.name)}&album=${encodeURIComponent(req.body.album)}&api_key=${process.env.LASTFM_API_KEY}&format=json`);
+  const response = await fetch(`https://api.genius.com/search?q=${encodeURIComponent(req.body.name)}&access_token=${process.env.GENIUS_API_KEY}`);
   const data = await response.json();
   let albumCover = '';
-  if (data.message === undefined) {
-    albumCover = data.album.image[3]['#text'];
-  }
-  // Large album size.
-  console.log(data.album.image[3]);
+  if (data.response.hits.length) {
+    albumCover = data?.response?.hits[0]?.result?.header_image_thumbnail_url || false;
+  } 
+
+  //if (data.message === undefined) {
+   // albumCover = data.album.image[3]['#text'];
+  //}
+
+  // Large album size. 
+  //console.log(data.album.image[3]);
 
   client.db('metal-albums').collection('albums').insertOne(
     {
-      name: req.body.name,
-      album: req.body.album,
+      name: data?.response?.hits[0]?.result?.primary_artist?.name ?? req.body.name,
+      album: data?.response?.hits[0]?.result?.title ?? req.body.album,
       status: 'none',
       image: albumCover,
     },
