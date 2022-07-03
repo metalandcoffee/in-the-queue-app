@@ -2,9 +2,10 @@ import {
   useEffect, useState,
 } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { server } from '../lib/config';
 import List from '../components/List';
 import styles from '../styles/Home.module.css';
@@ -14,10 +15,11 @@ import banner from '../public/banner.jpeg';
  * Home Page.
  */
 export default function Home() {
-  const router = useRouter();
   const {
     user, isLoading,
   } = useUser();
+
+  const isLoggedIn = user && !isLoading;
 
   // Set state.
   const [ albums, setAlbums ] = useState([]);
@@ -25,7 +27,6 @@ export default function Home() {
   const [ album, setAlbum ] = useState('');
   const [ error, setError ] = useState(false);
   const [ notif, setNotif ] = useState(false);
-  const [ isMounted, setIsMounted ] = useState(true);
 
   const onAlbumUpdate = async () => {
     try {
@@ -44,19 +45,6 @@ export default function Home() {
     })();
   },
   []);
-
-  // Check user authentication.
-  useEffect(() => {
-    // Check if user is logged in...
-    if (!isMounted) {
-      return;
-    }
-
-    if (!user && !isLoading) {
-      router.push('/api/auth/login');
-    }
-  },
-  [ isMounted, user, router, isLoading ]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -95,6 +83,8 @@ export default function Home() {
         <meta name="description" content="Track your music listening!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Link href="/api/auth/login">Login</Link>
+      <Link href="/api/auth/logout">Logout</Link>
       <header>
         <div className={styles.imageContainer}>
           <Image
@@ -111,32 +101,34 @@ export default function Home() {
       <main className={styles.main}>
         {notif && <div className="notification">{notif}</div>}
         {error && <div className="error">{error}</div>}
-        <div className="container">
-          <h2>Add Album</h2>
-          <form>
-            <input
-              className={styles.input}
-              type="text"
-              value={artist}
-              placeholder="Enter name..."
-              onChange={(e) => setArtist(e.target.value)}
-            />
-            <input
-              className={styles.input}
-              type="text"
-              value={album}
-              placeholder="Enter album..."
-              onChange={(e) => setAlbum(e.target.value)}
-            />
-            <button
-              className={styles.button}
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Submit
-            </button>
-          </form>
-        </div>
+        {isLoggedIn && (
+          <div className="container">
+            <h2>Add Album</h2>
+            <form>
+              <input
+                className={styles.input}
+                type="text"
+                value={artist}
+                placeholder="Enter name..."
+                onChange={(e) => setArtist(e.target.value)}
+              />
+              <input
+                className={styles.input}
+                type="text"
+                value={album}
+                placeholder="Enter album..."
+                onChange={(e) => setAlbum(e.target.value)}
+              />
+              <button
+                className={styles.button}
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        )}
         <hr className="container" />
         <List
           className={styles.listening}

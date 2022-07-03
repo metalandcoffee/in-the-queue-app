@@ -1,5 +1,5 @@
 import Image from 'next/image';
-
+import { useUser } from '@auth0/nextjs-auth0';
 import placeholder from '../public/placeholder.png';
 import LikedIcon from './icons/Liked';
 import DislikedIcon from './icons/Disliked';
@@ -9,6 +9,13 @@ import styles from '../styles/List.module.css';
 const Album = ({
   album, onAlbumUpdate,
 }) => {
+  // Get user information.
+  const {
+    user, isLoading,
+  } = useUser();
+
+  const isLoggedIn = user && !isLoading;
+
   const updateStatus = async (status) => {
     const endpoint = status === 'delete' ? 'delete' : 'update';
     const response = await fetch(`/api/${endpoint}/`,
@@ -39,6 +46,7 @@ const Album = ({
 
       <h2>{album.name}</h2>
       <p>{album.album}</p>
+      { isLoggedIn && (
       <p className={styles.modify}>
         <button className={styles.button} onClick={() => updateStatus('liked')}>
           <LikedIcon />
@@ -56,6 +64,7 @@ const Album = ({
           <DeleteIcon />
         </button>
       </p>
+      )}
     </li>
   );
 };
