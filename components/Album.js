@@ -4,7 +4,6 @@ import placeholder from '../public/placeholder.png';
 import LikedIcon from './icons/Liked';
 import DislikedIcon from './icons/Disliked';
 import DeleteIcon from './icons/Delete';
-import styles from '../styles/List.module.css';
 
 const Album = ({
   album, onAlbumUpdate,
@@ -34,7 +33,7 @@ const Album = ({
   };
 
   return (
-    <li className={styles.item}>
+    <li className="">
       <div className="img-container">
         <Image
           width={150}
@@ -44,21 +43,24 @@ const Album = ({
         />
       </div>
 
-      <h2>{album.name}</h2>
+      <h3>{album.name}</h3>
       <p>{album.album}</p>
       { isLoggedIn && (
-      <p className={styles.modify}>
-        <button className={styles.button} onClick={() => updateStatus('liked')}>
+      <p className="">
+        <button
+          className=""
+          onClick={() => updateStatus('liked')}
+        >
           <LikedIcon />
         </button>
         <button
-          className={styles.button}
+          className=""
           onClick={() => updateStatus('disliked')}
         >
           <DislikedIcon />
         </button>
         <button
-          className={styles.button}
+          className=""
           onClick={() => updateStatus('delete')}
         >
           <DeleteIcon />

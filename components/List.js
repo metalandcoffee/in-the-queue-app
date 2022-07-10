@@ -1,20 +1,12 @@
-import styles from '../styles/List.module.css';
 import Album from './Album';
 
 export default function List({
   heading, albums, onAlbumUpdate,
 }) {
   return (
-    <div className={styles.container}>
+    <div className="">
       <h2 className="container">{heading}</h2>
-      <ul className={styles.grid}>
-        <li className={styles.head}>
-          <p></p>
-          <p>Artwork</p>
-          <p>Artist</p>
-          <p>Album</p>
-          <p></p>
-        </li>
+      <ul className="">
         {albums.map((album, index) => (
           <Album key={index} album={album} onAlbumUpdate={onAlbumUpdate} />
         ))}
