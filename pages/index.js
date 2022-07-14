@@ -6,14 +6,12 @@ import {
 } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 
 /**
  * Internal dependencies.
  */
 import { server } from '../lib/config';
-import Sidebar from '../components/Sidebar';
 import List from '../components/List';
 import Login from '../components/icons/Login';
 import Logout from '../components/icons/Logout';
@@ -90,7 +88,6 @@ export default function Home() {
         <meta name="description" content="Track your music listening!" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Sidebar />
       <main className="">
         <header>
         {isLoggedIn ? (
@@ -113,7 +110,7 @@ export default function Home() {
         {notif && <div className="notification">{notif}</div>}
         {error && <div className="error">{error}</div>}
         {isLoggedIn && (
-          <div className="container">
+          <div id="add-album">
             <h2>Add Album</h2>
             <form>
               <input
@@ -159,19 +156,6 @@ export default function Home() {
           onAlbumUpdate={onAlbumUpdate}
         />
       </main>
-
-      <footer className="">
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className="">
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   );
 }

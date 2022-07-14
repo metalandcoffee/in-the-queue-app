@@ -4,6 +4,7 @@
 	--white: #fff;
 	--grey: #545252;
 	--light-grey: #a09593;
+	--lighter-grey: #c4c4c4;
 }
 
 * {
@@ -25,6 +26,38 @@ a {
 	color: var(--white);
 }
 
+aside {
+	background-color: var(--black);
+}
+
+button {
+	cursor: pointer;
+	color: var(--white);
+	border: 1px solid white;
+  border-radius: 5px;
+	font-family: 'Albert Sans', sans-serif;
+	text-transform: uppercase;
+	background: none;
+	font-size: 0.75rem;
+  letter-spacing: 1px;
+	transition: all 0.3s;
+}
+
+button:hover {
+	color: var(--off-black);
+	background-color: var(--white);
+}
+
+button.svg {
+	border: none;
+}
+
+form {
+	display: grid;
+	grid-auto-flow: column;
+	grid-column-gap: 5px;
+}
+
 h1,
 h2,
 h3,
@@ -32,22 +65,31 @@ h4,
 h5,
 h6 {
 	margin-top: 0;
+	line-height: 1;
 }
 
 h2 {
 	border-bottom: 1px solid var(--grey);
 	padding-bottom: 1rem;
+	font-size: 3rem;
+	letter-spacing: -5px;
+	text-transform: uppercase;
 }
 
 header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 0.5rem;
+	padding: 1rem;
 }
 
-aside {
-	background-color: var(--black);
+input {
+	font-family: 'Albert Sans', sans-serif;
+	background: rgba(158, 158, 158, 0.25);
+	color: var(--lighter-grey);
+	border: none;
+	border-radius: 4px;
+	padding: 0.75rem 1rem;
 }
 
 svg {
@@ -57,15 +99,17 @@ svg {
 }
 
 ul {
-  display: grid;
-  grid-auto-flow: column;
-  list-style: none;
-  grid-auto-columns: 230px;
+	display: grid;
+	grid-auto-flow: column;
+	list-style: none;
+	grid-auto-columns: 230px;
 }
 
-.container {
-	display: grid;
-	grid-template-columns: 200px 1fr;
+li {
+	background-color: rgba(86, 83, 83, 0.4);
+	margin: 0.5rem;
+	padding: 1rem;
+	border-radius: 5%;
 }
 
 .screen-reader {
@@ -81,10 +125,47 @@ ul {
 	word-wrap: normal !important;
 }
 
+.album-cover {
+	border-radius: 5%;
+}
+
+.album-name {
+	margin: 0;
+}
+
+.artist-name {
+	margin: 0;
+	font-size: 0.75rem;
+	color: var(--light-grey);
+}
+
+#add-album {
+	display: grid;
+	grid-template-columns: auto auto;
+	justify-content: center;
+	align-items: center;
+	grid-column-gap: 1rem;
+}
+
+#add-album h2 {
+	font-size: 2rem;
+	border: none;
+	margin: 0;
+	padding: 0;
+	letter-spacing: -2px;
+}
+
 #app-name {
 	margin: 0;
 	font-size: 1rem;
 	color: var(--light-grey);
 	text-transform: uppercase;
 	letter-spacing: -1px;
+}
+
+header,
+h2,
+ul {
+	padding-left: 3rem;
+	padding-right: 3rem;
 }

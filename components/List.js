@@ -5,7 +5,7 @@ export default function List({
 }) {
   return (
     <div className="">
-      <h2 className="container">{heading}</h2>
+      <h2>{heading}</h2>
       <ul className="">
         {albums.map((album, index) => (
           <Album key={index} album={album} onAlbumUpdate={onAlbumUpdate} />
