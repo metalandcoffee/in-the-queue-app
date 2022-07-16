@@ -36,7 +36,7 @@ const Album = ({
     <li className="">
       <div className="img-container">
         <Image
-          class="album-cover"
+          className="album-cover"
           width={300}
           height={300}
           src={album.image && album.image !== '' ? album.image : placeholder}
