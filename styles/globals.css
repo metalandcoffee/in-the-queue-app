@@ -35,7 +35,7 @@ aside {
 
 button {
 	cursor: pointer;
-	color: var(--white);
+	color: var(--off-black);
 	border: 1px solid white;
   border-radius: 5px;
 	font-family: 'Albert Sans', sans-serif;
@@ -47,12 +47,23 @@ button {
 }
 
 button:hover {
-	color: var(--off-black);
-	background-color: var(--white);
+	color: rgba(255, 255, 255, 0.5);
 }
 
 button.svg {
 	border: none;
+	min-height: 3rem;
+	min-width: 3rem;
+	padding: 10px;
+	background: radial-gradient(circle, rgba(183,91,205,1) 0%, rgba(95,101,107,1) 100%);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+button.svg.delete {
+	background: radial-gradient(circle, rgba(207,65,94,1) 0%, rgba(95,101,107,1) 100%);
 }
 
 form {
@@ -103,9 +114,8 @@ svg {
 
 ul {
 	display: grid;
-	grid-auto-flow: column;
+	grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
 	list-style: none;
-	grid-auto-columns: 230px;
 }
 
 li {
@@ -128,6 +138,10 @@ li {
 	word-wrap: normal !important;
 }
 
+.album-card {
+	display: grid;
+}
+
 .album-cover {
 	border-radius: 5%;
 }
@@ -136,10 +150,18 @@ li {
 	margin: 0;
 }
 
+.album-status {
+	margin-bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	align-self: end;
+}
+
 .artist-name {
 	margin: 0;
 	font-size: 0.75rem;
 	color: var(--light-grey);
+	align-self: end;
 }
 
 #add-album {
@@ -164,6 +186,11 @@ li {
 	color: var(--light-grey);
 	text-transform: uppercase;
 	letter-spacing: -1px;
+}
+
+#liked-albums button.svg.like,
+#disliked-albums button.svg.dislike {
+	filter: drop-shadow(0 0 0.75rem #c3d5c4);
 }
 
 header,

@@ -1,10 +1,10 @@
 import Album from './Album';
 
 export default function List({
-  heading, albums, onAlbumUpdate,
+  id, heading, albums, onAlbumUpdate,
 }) {
   return (
-    <div className="">
+    <div id={ id }>
       <h2>{heading}</h2>
       <ul className="">
         {albums.map((album, index) => (

@@ -140,19 +140,19 @@ export default function Home() {
           </div>
         )}
         <List
-          className=""
+          id="listening"
           heading="Listening to..."
           albums={albums.filter((x) => x.status === 'none')}
           onAlbumUpdate={onAlbumUpdate}
         />
         <List
-          className=""
+          id="liked-albums"
           heading="Liked Music"
           albums={albums.filter((x) => x.status === 'liked')}
           onAlbumUpdate={onAlbumUpdate}
         />
         <List
-          className=""
+          id="disliked-albums"
           heading="Disliked Music"
           albums={albums.filter((x) => x.status === 'disliked')}
           onAlbumUpdate={onAlbumUpdate}

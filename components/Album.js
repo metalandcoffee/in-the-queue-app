@@ -33,12 +33,12 @@ const Album = ({
   };
 
   return (
-    <li className="">
+    <li className="album-card">
       <div className="img-container">
         <Image
           className="album-cover"
-          width={300}
-          height={300}
+          width={500}
+          height={500}
           src={album.image && album.image !== '' ? album.image : placeholder}
           alt=""
         />
@@ -47,21 +47,21 @@ const Album = ({
       <h3 className="album-name">{album.album}</h3>
       <p className="artist-name">{album.name}</p>
       { isLoggedIn && (
-      <p className="">
+      <p className="album-status">
         <button
-          className="svg"
+          className="svg like"
           onClick={() => updateStatus('liked')}
         >
           <LikedIcon />
         </button>
         <button
-          className="svg"
+          className="svg dislike"
           onClick={() => updateStatus('disliked')}
         >
           <DislikedIcon />
         </button>
         <button
-          className="svg"
+          className="svg delete"
           onClick={() => updateStatus('delete')}
         >
           <DeleteIcon />
