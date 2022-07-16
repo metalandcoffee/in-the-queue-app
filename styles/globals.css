@@ -35,14 +35,15 @@ aside {
 
 button {
 	cursor: pointer;
-	color: var(--off-black);
+	color: var(--white);
 	border: 1px solid white;
-  border-radius: 5px;
+	padding: 0.5rem 1rem;
+	border-radius: 5px;
 	font-family: 'Albert Sans', sans-serif;
 	text-transform: uppercase;
 	background: none;
 	font-size: 0.75rem;
-  letter-spacing: 1px;
+	letter-spacing: 1px;
 	transition: all 0.3s;
 }
 
@@ -51,11 +52,16 @@ button:hover {
 }
 
 button.svg {
+	color: var(--off-black);
 	border: none;
 	min-height: 3rem;
 	min-width: 3rem;
 	padding: 10px;
-	background: radial-gradient(circle, rgba(183,91,205,1) 0%, rgba(95,101,107,1) 100%);
+	background: radial-gradient(
+		circle,
+		rgba(183, 91, 205, 1) 0%,
+		rgba(95, 101, 107, 1) 100%
+	);
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -63,13 +69,18 @@ button.svg {
 }
 
 button.svg.delete {
-	background: radial-gradient(circle, rgba(207,65,94,1) 0%, rgba(95,101,107,1) 100%);
+	background: radial-gradient(
+		circle,
+		rgba(207, 65, 94, 1) 0%,
+		rgba(95, 101, 107, 1) 100%
+	);
 }
 
 form {
 	display: grid;
-	grid-auto-flow: column;
+	grid-template-columns: repeat(auto-fill, minmax(100px, auto));
 	grid-column-gap: 5px;
+	grid-row-gap: 5px;
 }
 
 h1,
@@ -166,10 +177,7 @@ li {
 
 #add-album {
 	display: grid;
-	grid-template-columns: auto auto;
-	justify-content: center;
-	align-items: center;
-	grid-column-gap: 1rem;
+	grid-row-gap: 10px;
 }
 
 #add-album h2 {
@@ -193,9 +201,20 @@ li {
 	filter: drop-shadow(0 0 0.75rem #c3d5c4);
 }
 
+#add-album,
 header,
 h2,
 ul {
-	padding-left: 3rem;
-	padding-right: 3rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+}
+
+@media (min-width: 600px) {
+	#add-album,
+	header,
+	h2,
+	ul {
+		padding-left: 3rem;
+		padding-right: 3rem;
+	}
 }
