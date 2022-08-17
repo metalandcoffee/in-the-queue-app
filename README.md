@@ -1,4 +1,4 @@
-https://in-the-queue.herokuapp.com/
+Demo - https://in-the-queue.herokuapp.com/
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -36,4 +36,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 
-# Follow [Devdojo](https://devdojo.com/avneesh/add-auth0-authentication-to-your-nextjs-app-in-less-than-5-minutes) for setting up Auth0 authentication in .env.local
+## Setting up env
+
+  Follow [Devdojo](https://devdojo.com/avneesh/add-auth0-authentication-to-your-nextjs-app-in-less-than-5-minutes) instructions to set up Auth0 authentication in .env.local
+  
+  Make an genius account and then go to https://genius.com/developers

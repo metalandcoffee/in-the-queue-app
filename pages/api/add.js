@@ -14,14 +14,25 @@ export default withApiAuthRequired(async (req, res) => {
   const client = await clientPromise;
   const db = client.db('metal-albums');
 
+  
   // Fetch album artwork from Genius.
   const response = await fetch(`https://api.genius.com/search?q=${encodeURIComponent(req.body.name)}&access_token=${process.env.GENIUS_API_KEY}`);
   const data = await response.json();
+  let checksong = await db.collection('albums').find({ album: data.response.hits[0].result.title }).toArray()
+  // If no results are returned...
+  if (!data.response.hits.length) {
+    return res.status(400).json({ message: 'No results found.' });
+  }
+
+  // If album is already in database...
+  if (checksong.length) {
+    return res.status(400).json({ message: 'Album already in database.' });
+  }
 
   // Is message property is present, no available album artwork.
   const albumCover = data?.response?.hits[0]?.result?.header_image_thumbnail_url || false;
 
-  // Add new album to database.
+  // Add a new album to database.
   const newAlbum = {
     name: data?.response?.hits[0]?.result?.primary_artist?.name ?? req.body.name,
     album: data?.response?.hits[0]?.result?.title ?? req.body.album,
