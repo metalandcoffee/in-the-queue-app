@@ -1,15 +1,20 @@
+/**
+ * External dependencies.
+ */
 import {
   useEffect, useState,
 } from 'react';
 import { useUser } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 
+/**
+ * Internal dependencies.
+ */
 import { server } from '../lib/config';
 import List from '../components/List';
-import styles from '../styles/Home.module.css';
-import banner from '../public/banner.jpeg';
+import Login from '../components/icons/Login';
+import Logout from '../components/icons/Logout';
 
 /**
  * Home Page.
@@ -76,43 +81,58 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="container">
       <Head>
         <title>In The Queue</title>
         <meta name="description" content="Track your music listening!" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
       </Head>
-      <Link href="/api/auth/login">Login</Link>
-      <Link href="/api/auth/logout">Logout</Link>
-      <header>
-        <div className={styles.imageContainer}>
-          <Image
-            src={banner}
-            alt="Picture of a vinyl player"
-            height={250}
-            style={{ borderRadius: 5 }}
-            objectFit="cover"
-            objectPosition="0 81%"
-          />
-          <h1 className="container">In The Queue</h1>
-        </div>
-      </header>
-      <main className={styles.main}>
+      <main className="">
+        <header>
+        {isLoggedIn ? (
+            <Link href="/api/auth/logout" passHref>
+              <a title="Logout">
+                <Logout />
+              </a>
+            </Link>
+        ) : (
+          <Link href="/api/auth/login" passHref>
+          <a title="Login">
+            <Login />
+          </a>
+        </Link>
+        ) }
+          <h1 id="app-name">In The Queue</h1>
+          <div></div>
+        </header>
+
         {notif && <div className="notification">{notif}</div>}
         {error && <div className="error">{error}</div>}
         {isLoggedIn && (
-          <div className="container">
+          <div id="add-album">
             <h2>Add Album</h2>
             <form>
               <input
-                className={styles.input}
+                className=""
                 type="text"
                 value={artist}
                 placeholder="Enter album's name..."
                 onChange={(e) => setArtist(e.target.value)}
               />
+<<<<<<< HEAD
+=======
+              <input
+                className=""
+                type="text"
+                value={album}
+                placeholder="Enter album..."
+                onChange={(e) => setAlbum(e.target.value)}
+              />
+>>>>>>> bb9f5b82c472e94f6e0dedd3bd8469345475166e
               <button
-                className={styles.button}
+                className=""
                 type="submit"
                 onClick={handleSubmit}
               >
@@ -121,41 +141,25 @@ export default function Home() {
             </form>
           </div>
         )}
-        <hr className="container" />
         <List
-          className={styles.listening}
+          id="listening"
           heading="Listening to..."
           albums={albums.filter((x) => x.status === 'none')}
           onAlbumUpdate={onAlbumUpdate}
         />
-        <hr className="container" />
         <List
-          className={styles.liked}
+          id="liked-albums"
           heading="Liked Music"
           albums={albums.filter((x) => x.status === 'liked')}
           onAlbumUpdate={onAlbumUpdate}
         />
-        <hr className="container" />
         <List
-          className={styles.disliked}
+          id="disliked-albums"
           heading="Disliked Music"
           albums={albums.filter((x) => x.status === 'disliked')}
           onAlbumUpdate={onAlbumUpdate}
         />
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   );
 }

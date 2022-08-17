@@ -6,7 +6,7 @@ function MyApp({
 }) {
   return (
   <UserProvider>
-    <Component {...pageProps} />;
+    <Component {...pageProps} />
   </UserProvider>
   );
 }
