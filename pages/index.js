@@ -7,7 +7,8 @@ import {
 import { useUser } from '@auth0/nextjs-auth0';
 import Head from 'next/head';
 import Link from 'next/link';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 /**
  * Internal dependencies.
  */
@@ -23,7 +24,6 @@ export default function Home() {
   const {
     user, isLoading,
   } = useUser();
-
   const isLoggedIn = user && !isLoading;
 
   // Set state.
@@ -68,16 +68,15 @@ export default function Home() {
     // If database update is successful...
     if (response.ok) {
       await onAlbumUpdate();
-
       // Set notification.
-      setNotif('Album successfully added.');
+      toast.success('Album added successfully!');
 
       // Clear form fields.
       setArtist('');
       setAlbum('');
     } else {
       const resJson = await response.json();
-      setError(resJson.message);
+      toast.error(resJson.message);
     }
   }
 
@@ -109,7 +108,7 @@ export default function Home() {
           <div></div>
         </header>
 
-        {notif && <div className="notification">{notif}</div>}
+       { /* {notif && <div className="notification">{notif}</div>} */}
         {error && <div className="error">{error}</div>}
         {isLoggedIn && (
           <div id="add-album">
@@ -119,15 +118,8 @@ export default function Home() {
                 className=""
                 type="text"
                 value={artist}
-                placeholder="Enter name..."
+                placeholder="Enter album's name..."
                 onChange={(e) => setArtist(e.target.value)}
-              />
-              <input
-                className=""
-                type="text"
-                value={album}
-                placeholder="Enter album..."
-                onChange={(e) => setAlbum(e.target.value)}
               />
               <button
                 className=""
@@ -136,6 +128,7 @@ export default function Home() {
               >
                 Submit
               </button>
+              <ToastContainer />
             </form>
           </div>
         )}
