@@ -9,6 +9,7 @@
     "function-call-argument-newline": ["error", "always"],
     "function-paren-newline": ["error", { "minItems": 3 }],
     "object-curly-newline": ["error", { "minProperties": 2 }],
-    "no-underscore-dangle": "off"
-  }
+    "no-underscore-dangle": "off",
+
+    }
 }

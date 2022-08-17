@@ -121,16 +121,6 @@ export default function Home() {
                 placeholder="Enter album's name..."
                 onChange={(e) => setArtist(e.target.value)}
               />
-<<<<<<< HEAD
-=======
-              <input
-                className=""
-                type="text"
-                value={album}
-                placeholder="Enter album..."
-                onChange={(e) => setAlbum(e.target.value)}
-              />
->>>>>>> bb9f5b82c472e94f6e0dedd3bd8469345475166e
               <button
                 className=""
                 type="submit"
