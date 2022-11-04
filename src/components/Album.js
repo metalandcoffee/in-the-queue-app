@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useUser } from '@auth0/nextjs-auth0';
-import placeholder from '../public/placeholder.png';
+import placeholder from '../../public/placeholder.png';
 import LikedIcon from './icons/Liked';
 import DislikedIcon from './icons/Disliked';
 import DeleteIcon from './icons/Delete';

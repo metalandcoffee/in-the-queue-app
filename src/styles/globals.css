@@ -175,6 +175,20 @@ li {
 	align-self: end;
 }
 
+.notification {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.notification span {
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	height: 100%;
+}
+
 #add-album {
 	display: grid;
 	grid-row-gap: 10px;

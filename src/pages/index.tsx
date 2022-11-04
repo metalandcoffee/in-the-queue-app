@@ -31,7 +31,7 @@ export default function Home() {
   const [ artist, setArtist ] = useState('');
   const [ album, setAlbum ] = useState('');
   const [ error, setError ] = useState(false);
-  const [ notif, setNotif ] = useState(false);
+  const [ notif, setNotif ] = useState<String>('');
 
   const onAlbumUpdate = async () => {
     try {
@@ -69,8 +69,11 @@ export default function Home() {
     if (response.ok) {
       await onAlbumUpdate();
 
-      // Set notification.
+      // Set notification and expiration.
       setNotif('Album successfully added.');
+      setTimeout(function(){
+        setNotif('');
+      }, 2000);
 
       // Clear form fields.
       setArtist('');
@@ -109,7 +112,7 @@ export default function Home() {
           <div></div>
         </header>
 
-        {notif && <div className="notification">{notif}</div>}
+        {notif && <div className="notification"><span>{notif}</span></div>}
         {error && <div className="error">{error}</div>}
         {isLoggedIn && (
           <div id="add-album">
