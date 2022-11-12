@@ -1,13 +1,30 @@
+/**
+ * External dependencies.
+ */
 import Image from 'next/image';
 import { useUser } from '@auth0/nextjs-auth0';
+
+/**
+ * Internal dependencies.
+ */
 import placeholder from '../../public/placeholder.png';
 import LikedIcon from './icons/Liked';
 import DislikedIcon from './icons/Disliked';
 import DeleteIcon from './icons/Delete';
 
+/**
+ * Types
+ */
+import { Album, Status } from '../models/types';
+
+export type AlbumProps = {
+  album: Album;
+  onAlbumUpdate: () => Promise<void>;
+};
+
 const Album = ({
   album, onAlbumUpdate,
-}) => {
+}: AlbumProps) => {
   // Get user information.
   const {
     user, isLoading,
@@ -15,7 +32,7 @@ const Album = ({
 
   const isLoggedIn = user && !isLoading;
 
-  const updateStatus = async (status) => {
+  const updateStatus = async (status: Status): Promise<void> => {
     const endpoint = status === 'delete' ? 'delete' : 'update';
     const response = await fetch(`/api/${endpoint}/`,
       {

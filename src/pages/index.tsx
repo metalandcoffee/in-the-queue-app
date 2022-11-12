@@ -17,6 +17,12 @@ import Login from '../components/icons/Login';
 import Logout from '../components/icons/Logout';
 
 /**
+ * Types.
+ */
+ import { AlbumProps } from '../components/Album';
+ import { Album } from '../models/types';
+
+/**
  * Home Page.
  */
 export default function Home() {
@@ -24,23 +30,23 @@ export default function Home() {
     user, isLoading,
   } = useUser();
 
-  const isLoggedIn = user && !isLoading;
+  const isLoggedIn: boolean = user && !isLoading ? true : false;
 
   // Set state.
-  const [ albums, setAlbums ] = useState([]);
+  const [ albums, setAlbums ] = useState<Album[]>([]);
   const [ artist, setArtist ] = useState('');
   const [ album, setAlbum ] = useState('');
   const [ error, setError ] = useState(false);
   const [ notif, setNotif ] = useState<String>('');
 
-  const onAlbumUpdate = async () => {
+  const onAlbumUpdate = async (): Promise<void> => {
     try {
       const res = await fetch(`${server}/api/albums`);
       const obj = await res.json();
 
       setAlbums(obj.albums);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -51,8 +57,9 @@ export default function Home() {
   },
   []);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  const handleSubmit = async (event: React.MouseEvent) : Promise<void> => {
+    event.preventDefault();
+    console.log(event);
 
     // Add new album to database.
     const response = await fetch('/api/add/',
@@ -91,7 +98,7 @@ export default function Home() {
         <meta name="description" content="Track your music listening!" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
       </Head>
       <main className="">
         <header>
@@ -145,19 +152,19 @@ export default function Home() {
         <List
           id="listening"
           heading="Listening to..."
-          albums={albums.filter((x) => x.status === 'none')}
+          albums={albums.filter((album) => album.status === 'none')}
           onAlbumUpdate={onAlbumUpdate}
         />
         <List
           id="liked-albums"
           heading="Liked Music"
-          albums={albums.filter((x) => x.status === 'liked')}
+          albums={albums.filter((album) => album.status === 'liked')}
           onAlbumUpdate={onAlbumUpdate}
         />
         <List
           id="disliked-albums"
           heading="Disliked Music"
-          albums={albums.filter((x) => x.status === 'disliked')}
+          albums={albums.filter((album) => album.status === 'disliked')}
           onAlbumUpdate={onAlbumUpdate}
         />
       </main>

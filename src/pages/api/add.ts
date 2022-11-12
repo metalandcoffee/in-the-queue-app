@@ -2,6 +2,7 @@
 /**
  * Add Endpoint.
  */
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 import clientPromise from '../../lib/mongodb';
 
@@ -16,7 +17,7 @@ type LastFMResponse = {
   }
 };
 
-export default withApiAuthRequired(async (req, res) => {
+export default withApiAuthRequired(async (req: NextApiRequest, res: NextApiResponse) => {
 
   // If artist name or album name is falsy...
   if (!req.body.name || !req.body.album) {
