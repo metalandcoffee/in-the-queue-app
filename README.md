@@ -1,8 +1,18 @@
+# In The Queue
+
+**In The Queue** is a Next.js project that allows you to manage your music discovery! You can add an album to your current list and it will be added to the "Currently listening" section. From there, you will be able to give it a thumbs up or thumbs down to place it in the "Liked" or "Disliked" section. You can also delete the album from your list or edit the album entry.
+
+[ Add screenshots ]
+
+Production:
+[ Add Heroku status icon ]
 https://in-the-queue.herokuapp.com/
+
+## Architecture Details
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+### Getting Started
 
 First, run the development server:
 
@@ -20,7 +30,7 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+### Learn More
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -29,8 +39,3 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
