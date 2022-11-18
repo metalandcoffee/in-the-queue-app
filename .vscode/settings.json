@@ -1,4 +1,11 @@
 {
-	"editor.tabSize": 2,
-	"twig-language.indentStyle": "space"
+	"editor.tabSize": 4,
+	"twig-language.indentStyle": "space",
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+	},
+	"editor.formatOnSave": true,
 }
