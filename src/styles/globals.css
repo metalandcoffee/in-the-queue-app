@@ -4,6 +4,7 @@
 :root {
 	--black: #000;
 	--off-black: #262626;
+	--transparent-black: #282830c9;
 	--white: #fff;
 	--grey: #545252;
 	--light-grey: #a09593;
@@ -151,6 +152,7 @@ li {
 
 .album-card {
 	display: grid;
+	position: relative;
 }
 
 .album-cover {
@@ -162,10 +164,23 @@ li {
 }
 
 .album-status {
-	margin-bottom: 0;
+	z-index: 1;
+	opacity: 0;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	display: block;
+	background-color: var(--transparent-black);
+	transition: all 0.3s;
 	display: flex;
-	justify-content: space-between;
-	align-self: end;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+}
+
+.album-status:hover {
+	opacity: 1;
 }
 
 .artist-name {
