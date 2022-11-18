@@ -8,6 +8,9 @@ Production:
 [ Add Heroku status icon ]
 https://in-the-queue.herokuapp.com/
 
+## Priority Github Issues
+https://github.com/metalandcoffee/in-the-queue-app/issues/31
+https://github.com/metalandcoffee/in-the-queue-app/issues/23
 ## Architecture Details
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
