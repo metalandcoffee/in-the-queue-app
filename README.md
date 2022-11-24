@@ -9,6 +9,7 @@ Production:
 https://in-the-queue.herokuapp.com/
 
 ## Priority Github Issues
+- Comment and organize globals.css
 https://github.com/metalandcoffee/in-the-queue-app/issues/31
 https://github.com/metalandcoffee/in-the-queue-app/issues/23
 ## Architecture Details
