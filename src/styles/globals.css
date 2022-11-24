@@ -179,7 +179,8 @@ li {
 	gap: 5px;
 }
 
-.album-status:hover {
+.album-status:hover,
+.album-status:active {
 	opacity: 1;
 }
 
